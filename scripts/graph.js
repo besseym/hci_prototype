@@ -11,7 +11,7 @@ require(
             force = d3.layout.force()
                 .linkStrength(0.1)
                 .friction(0.9)
-                .distance(400)
+                .distance(600)
                 .gravity(0.05)
                 .charge(-50)
                 .gravity(0.1)
@@ -33,7 +33,7 @@ require(
                 .enter().append("line")
                 .attr("class", "link")
                 .style("stroke-width", function (d) {
-                    return Math.sqrt(d.weight);
+                    return Math.sqrt(d.weight / 10);
                 });
 
             node = svg.selectAll(".node")
