@@ -1,0 +1,39 @@
+
+@import '../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';
+
+$fa-font-path: '/fonts';
+@import '../bower_components/fontawesome/scss/font-awesome';
+
+
+.link {
+  stroke: #aaa;
+}
+
+.node text {
+  stroke:#333;
+  cursos:pointer;
+}
+
+.node circle{
+  stroke:#fff;
+  stroke-width:3px;
+  fill:#555;
+}
+
+
+.chart {
+
+  &.chart-graph {
+    width: 1280px;
+    height: 1500px;
+
+    svg {
+
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+}
