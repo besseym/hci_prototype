@@ -11,7 +11,7 @@ require(
             force = d3.layout.force()
                 .linkStrength(0.1)
                 .friction(0.9)
-                .distance(600)
+                .distance(400)
                 .gravity(0.05)
                 .charge(-50)
                 .gravity(0.1)
@@ -19,7 +19,7 @@ require(
                 .alpha(0.1)
                 .size([width, height]);
 
-        d3.json("/hci_prototype/data/graph_802_0_0.json", function(error, graph) {
+        d3.json("/hci_prototype/data/graph_crime.json", function(error, graph) {
 
             var node,
                 link;
@@ -33,13 +33,19 @@ require(
                 .enter().append("line")
                 .attr("class", "link")
                 .style("stroke-width", function (d) {
-                    return Math.sqrt(d.weight / 10);
+                    return Math.log(d.weight);
                 });
 
             node = svg.selectAll(".node")
                 .data(graph.nodes)
                 .enter().append("circle")
-                .attr("class", "node")
+                .attr("id", function(d, i){
+                    return "v-" + d.id;
+                })
+                .attr("class", function(d, i){
+
+                    return "node type-" + d.type + " match-" + d.isMatch;
+                })
                 .attr("r", function(d, i){
 
                     var weight = 1;

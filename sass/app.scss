@@ -1,7 +1,7 @@
 
 @import '../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';
 
-$fa-font-path: '/fonts';
+$fa-font-path: '/hci_prototype/fonts';
 @import '../bower_components/fontawesome/scss/font-awesome';
 
 
@@ -20,12 +20,16 @@ $fa-font-path: '/fonts';
   fill:#555;
 }
 
+circle.match-false {
+  fill:red;
+}
 
 .chart {
 
   &.chart-graph {
-    width: 1280px;
-    height: 1500px;
+    width: 100%;
+
+    height: 1000px;
 
     svg {
 

@@ -9,10 +9,384 @@
 </head>
 <body>
 
-    <div class="chart chart-graph">
-        <svg ></svg>
+    <div class="container">
+
+        <h1>Video Connection Visualization</h1>
+
     </div>
 
-<script data-main="/hci_prototype/scripts/app" src="/hci_prototype/bower_components/requirejs/require.js"></script>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <ul class="nav nav-tabs nav-justified">
+                    <li role="presentation" class="active"><a href="#">Search</a></li>
+                    <li role="presentation"><a href="#">Highlight</a></li>
+                    <li role="presentation"><a href="#">Select</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div role="tabpanel" class="tab-pane active" id="search">
+
+                        <form>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+
+                                    <div class="form-group">
+                                        <label for="outlet">Outlet</label>
+                                        <select class="form-control" id="outlet" name="outlet">
+                                            <option value="101">SmithChannel.com</option>
+                                            <option value="204">Smith Mobile</option>
+                                            <option value="203">Smithsonian Museum</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="seriesId">Series Id</label>
+                                        <input type="text" class="form-control" id="seriesId" name="seriesId">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="seasonNumber">Season #</label>
+                                        <input type="text" class="form-control" id="seasonNumber" name="seasonNumber">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="showId">Show Id</label>
+                                        <input type="text" class="form-control" id="showId" name="showId">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+
+                                    <div class="form-group">
+                                        <label for="keywords">Keywords <small>(common separated)</small></label>
+                                        <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Keywords">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <h4>Video Type</h4>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="abt"> About
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="bsc"> About
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="crd"> Credits
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="dmc"> Digital Media Content
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="eps"> Extended Scene
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="ext"> Extra
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="ful"> Full Episode
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="type" value="trl"> Trailer
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <button type="submit" class="pull-right btn btn-primary">Search</button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="highlight">
+
+
+                        <form>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="radio" name="highlight" value="type"> Type
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="radio" name="highlight" value="rating"> Rating
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="radio" name="highlight" value="title-type"> Title Type
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="radio" name="highlight" value="restriction"> Restriction
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <div>
+
+                            <i class="fa fa-link"></i>
+                            <i class="fa fa-chain-broken"></i>
+
+
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="select">
+
+                        <div class="row">
+
+                            <div class="col-md-8">
+
+                                <h2>Title</h2>
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <h2><i class="fa fa-play-circle-o"></i></h2>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label>Id</label>
+                                <p>123456</p>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label>Type</label>
+                                <p>Trailer</p>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label>Series Id</label>
+                                <p>323</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Season #</label>
+                                <p>2</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Show Id</label>
+                                <p>12345</p>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <h3>Description</h3>
+                                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tempus dapibus erat, ut condimentum sem condimentum non. Ut efficitur dui convallis mi convallis, a tempus nibh gravida. Curabitur ipsum diam, consectetur id neque at, blandit commodo augue.</p>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <h3>Connections</h3>
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Title</th>
+                                            <th>Type</th>
+                                            <th>Rating</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <i class="fa fa-bars"></i>
+                                            </td>
+                                            <td>Video #1</td>
+                                            <td>Trailer</td>
+                                            <td>TV-14</td>
+                                            <td>
+                                                <i class="fa fa-chain-broken"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="tab-content">
+
+                    <div role="tabpanel" class="tab-pane" id="profile">
+
+                        <div class="jumbotron">
+                            <h1>Welcome</h1>
+                            <p>...</p>
+                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+                        </div>
+
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane active" id="c">
+
+                        <div class="chart chart-graph">
+                            <svg ></svg>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script data-main="/hci_prototype/scripts/app" src="/hci_prototype/bower_components/requirejs/require.js"></script>
 </body>
 </html>
