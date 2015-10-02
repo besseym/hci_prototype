@@ -1,7 +1,4 @@
-require(
-    [
-        "d3"
-    ],
+require(["d3"],
     function(d3) {
 
         var chart = d3.select(".chart"),

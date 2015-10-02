@@ -21,17 +21,23 @@
 
             <div class="col-md-3">
 
-                <ul class="nav nav-tabs nav-justified">
-                    <li role="presentation" class="active"><a href="#">Search</a></li>
-                    <li role="presentation"><a href="#">Highlight</a></li>
-                    <li role="presentation"><a href="#">Select</a></li>
+                <ul id="tabs-dialog" class="nav nav-tabs nav-justified" role="tablist">
+                    <li id="nav-tab-search" role="presentation" >
+                        <a href="#tab-pane-search" data-toggle="tab">Search</a>
+                    </li>
+                    <li id="nav-tab-hightlight" role="presentation" class="active">
+                        <a href="#tab-pane-highlight" data-toggle="tab">Highlight</a>
+                    </li>
+                    <li id="nav-tab-select" role="presentation">
+                        <a href="#tab-pane-select" data-toggle="tab">Select</a>
+                    </li>
                 </ul>
 
-                <div class="tab-content">
+                <div id="tab-content-dialog" class="tab-content">
 
-                    <div role="tabpanel" class="tab-pane active" id="search">
+                    <div id="tab-pane-search" role="tabpanel" class="tab-pane">
 
-                        <form>
+                        <form id="form-search">
 
                             <div class="row">
 
@@ -188,7 +194,7 @@
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <button type="submit" class="pull-right btn btn-primary">Search</button>
+                                    <button id="btn-search" type="submit" class="pull-right btn btn-primary">Search</button>
                                 </div>
 
                             </div>
@@ -196,10 +202,10 @@
                         </form>
 
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="highlight">
+                    <div id="tab-pane-highlight" role="tabpanel" class="tab-pane active">
 
 
-                        <form>
+                        <form id="form-hightlight">
 
                             <div class="row">
 
@@ -248,18 +254,64 @@
 
                             </div>
 
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="radio" name="highlight" value="status"> Status
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="radio" name="highlight" value="match"> Search Match
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </form>
 
-                        <div>
+                        <div id="key-color" class="panel panel-default">
 
-                            <i class="fa fa-link"></i>
-                            <i class="fa fa-chain-broken"></i>
+                            <div class="panel-heading">Color Key</div>
 
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <svg height="100" width="100">
+                                        <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+                                    </svg>
+                                    Cras justo odio
+                                </li>
+                                <li class="list-group-item">Dapibus ac facilisis in</li>
+                                <li class="list-group-item">Morbi leo risus</li>
+                                <li class="list-group-item">Porta ac consectetur ac</li>
+                                <li class="list-group-item">Vestibulum at eros</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading">Icon Key</div>
+
+                            <ul class="list-group">
+                                <li class="list-group-item"><i class="fa fa-link"></i></li>
+                                <li class="list-group-item"><i class="fa fa-chain-broken"></i></li>
+                            </ul>
 
                         </div>
 
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="select">
+                    <div id="tab-pane-select" role="tabpanel" class="tab-pane">
 
                         <div class="row">
 
@@ -360,9 +412,9 @@
 
             <div class="col-md-9">
 
-                <div class="tab-content">
+                <div id="content-main" >
 
-                    <div role="tabpanel" class="tab-pane" id="profile">
+                    <div id="content-overview" style="display: none;">
 
                         <div class="jumbotron">
                             <h1>Welcome</h1>
@@ -372,9 +424,9 @@
 
                     </div>
 
-                    <div role="tabpanel" class="tab-pane active" id="c">
+                    <div id="content-viz">
 
-                        <div class="chart chart-graph">
+                        <div id="chart-graph-video" class="chart chart-graph">
                             <svg ></svg>
                         </div>
 
@@ -387,6 +439,9 @@
 
     </div>
 
+
+    <script src="/hci_prototype/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/hci_prototype/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
     <script data-main="/hci_prototype/scripts/app" src="/hci_prototype/bower_components/requirejs/require.js"></script>
 </body>
 </html>
