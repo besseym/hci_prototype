@@ -19,7 +19,7 @@ require(
                 .alpha(0.1)
                 .size([width, height]);
 
-        d3.json("/hci_prototype/data/graph_crime.json", function(error, graph) {
+        d3.json("/hci_prototype/data/graph_speed.json", function(error, graph) {
 
             var node,
                 link;
