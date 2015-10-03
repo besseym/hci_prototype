@@ -285,16 +285,6 @@
                             <div class="panel-heading">Color Key</div>
 
                             <ul class="list-group">
-                                <li class="list-group-item">
-                                    <svg height="100" width="100">
-                                        <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
-                                    </svg>
-                                    Cras justo odio
-                                </li>
-                                <li class="list-group-item">Dapibus ac facilisis in</li>
-                                <li class="list-group-item">Morbi leo risus</li>
-                                <li class="list-group-item">Porta ac consectetur ac</li>
-                                <li class="list-group-item">Vestibulum at eros</li>
                             </ul>
 
                         </div>
@@ -304,8 +294,8 @@
                             <div class="panel-heading">Icon Key</div>
 
                             <ul class="list-group">
-                                <li class="list-group-item"><i class="fa fa-link"></i></li>
-                                <li class="list-group-item"><i class="fa fa-chain-broken"></i></li>
+                                <li class="list-group-item"><i class="fa fa-link"></i> Whole Chain <br/><small>(indicates connection between two videos)</small></li>
+                                <li class="list-group-item"><i class="fa fa-chain-broken"></i> Broken Chain <p><small>(indicates <b>NO</b> connection between two videos)</small></p></li>
                             </ul>
 
                         </div>
@@ -428,6 +418,53 @@
 
                         <div id="chart-graph-video" class="chart chart-graph">
                             <svg ></svg>
+
+                            <div id="n-dialog" class="chart-dialog well">
+                                <h4 id="title">Video Title</h4>
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label>Id</label>
+                                        <p id="id">123456</p>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <label>Type</label>
+                                        <p id="type">Trailer</p>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <label>Series Id</label>
+                                        <p id="series-id"></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Season #</label>
+                                        <p id="season-number"></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Show Id</label>
+                                        <p id="show-id"></p>
+                                    </div>
+
+                                </div>
+
+                                <a class="btn btn-default btn-block" href="#" role="button">Select</a>
+                            </div>
+
+                            <div id="l-dialog" class="chart-dialog well">
+                                <p>
+                                    <h5 id="source"></h5>
+                                </p>
+                                <p>
+                                    <a href="#" class="btn btn-default"><i class="fa fa-link"></i></a>
+                                </p>
+                                <p>
+                                    <h5 id="target"></h5>
+                                </p>
+                            </div>
                         </div>
 
                     </div>

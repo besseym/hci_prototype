@@ -13,7 +13,7 @@ require(
         var dataNodeLink,
             nodeLinkChart;
 
-        chartUtil.loadNodeLinkData("graph_bionic.json", function(error, data) {
+        chartUtil.loadNodeLinkData("graph_speed.json", function(error, data) {
 
             if (error) throw error;
 

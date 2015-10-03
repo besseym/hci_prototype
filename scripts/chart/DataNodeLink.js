@@ -93,7 +93,7 @@ define(["common"],
 
             function addLink(l){
 
-                var id = l.source + "-" + l.target;
+                var id = 'l-' + l.source + "-" + l.target;
                 l.id = id;
 
                 linkMap[id] = l;
@@ -110,8 +110,6 @@ define(["common"],
 
                         n = config.nodes[i];
                         addNode(n);
-
-                        console.log(n);
                     }
                 }
 

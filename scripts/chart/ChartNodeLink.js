@@ -8,6 +8,8 @@ define(["common"], function (common) {
             width,
             height,
             svg,
+            nodeDialog,
+            linkDialog,
             data,
             typeColorScale = d3.scale.category20(),
             ratingColorScale = d3.scale.category20(),
@@ -85,6 +87,17 @@ define(["common"], function (common) {
 
             force.nodes(nodes).links(links).start();
 
+            svg.on('click', function(){
+
+                if(!nodeDialog.empty()){
+                    nodeDialog.style("visibility", "hidden");
+                }
+
+                if(!linkDialog.empty()){
+                    linkDialog.style("visibility", "hidden");
+                }
+            });
+
             link = svg.selectAll(".link")
                 .data(links)
                 .enter().append("line")
@@ -94,6 +107,27 @@ define(["common"], function (common) {
                 .attr("class", "link")
                 .style("stroke-width", function (d) {
                     return Math.log(d.weight);
+                })
+                .on('mouseover', function(d, i){
+
+                    var mouse = d3.mouse(this);
+
+                    if(linkDialog.empty()){
+                        return;
+                    }
+
+                    if(!nodeDialog.empty()){
+                        nodeDialog.style("visibility", "hidden");
+                    }
+
+                    linkDialog.style("left", mouse[0] + "px")
+                        .style("top", mouse[1] + "px");
+
+                    linkDialog.select("#source").text(d.source.title);
+                    linkDialog.select("#target").text(d.target.title);
+
+                    //Show the dialog
+                    linkDialog.style("visibility", "visible");
                 });
 
             node = svg.selectAll(".node")
@@ -113,6 +147,34 @@ define(["common"], function (common) {
                     }
 
                     return Math.log(parseInt(weight)* 100);
+                })
+                .on('mouseover', function(d, i){
+
+                    var circle;
+
+                    if(nodeDialog.empty()){
+                        return;
+                    }
+
+                    circle = d3.select(this);
+
+                    if(!linkDialog.empty()){
+                        linkDialog.style("visibility", "hidden");
+                    }
+
+                    nodeDialog.style("left", circle.attr("cx") + "px")
+                        .style("top", circle.attr("cy") + "px");
+
+                    nodeDialog.select("#id").text(d.id);
+                    nodeDialog.select("#title").text(d.title);
+                    nodeDialog.select("#type").text(d.type);
+
+                    nodeDialog.select("#series-id").text(d.seriesId);
+                    nodeDialog.select("#season-number").text(d.seasonNumber);
+                    nodeDialog.select("#show-id").text(d.showId);
+
+                    //Show the dialog
+                    nodeDialog.style("visibility", "visible");
                 });
 
             node.append("title")
@@ -144,6 +206,8 @@ define(["common"], function (common) {
                     if(exists) {
 
                         svg = frame.select("svg");
+                        nodeDialog = frame.select("#n-dialog");
+                        linkDialog = frame.select("#l-dialog");
                         width = parseInt(svg.style("width"), 10);
                         height = parseInt(svg.style("height"), 10);
                     }

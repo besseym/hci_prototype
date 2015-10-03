@@ -22,6 +22,9 @@ circle.node {
 
 .chart {
 
+  margin: 0; padding: 0;
+  position: relative;
+
   &.chart-graph {
     width: 100%;
 
@@ -34,6 +37,13 @@ circle.node {
       padding: 0;
       margin: 0;
     }
+  }
+
+  .chart-dialog {
+
+    width: 500px;
+    visibility: hidden;
+    position: absolute;
   }
 
 }
