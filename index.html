@@ -2,14 +2,14 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>HCI Prototype</title>
+    <title>Video Connection Visualization</title>
 
     <link rel="stylesheet" type="text/css" href="/hci_prototype/styles/app.css" />
 
 </head>
 <body>
 
-    <div class="container">
+    <div class="container page-header">
 
         <h1>Video Connection Visualization</h1>
 
@@ -22,10 +22,10 @@
             <div class="col-md-3">
 
                 <ul id="tabs-dialog" class="nav nav-tabs nav-justified" role="tablist">
-                    <li id="nav-tab-search" role="presentation" >
+                    <li id="nav-tab-search" role="presentation" class="active">
                         <a href="#tab-pane-search" data-toggle="tab">Search</a>
                     </li>
-                    <li id="nav-tab-hightlight" role="presentation" class="active">
+                    <li id="nav-tab-hightlight" role="presentation" >
                         <a href="#tab-pane-highlight" data-toggle="tab">Highlight</a>
                     </li>
                     <li id="nav-tab-select" role="presentation">
@@ -35,7 +35,7 @@
 
                 <div id="tab-content-dialog" class="tab-content">
 
-                    <div id="tab-pane-search" role="tabpanel" class="tab-pane">
+                    <div id="tab-pane-search" role="tabpanel" class="tab-pane active">
 
                         <form id="form-search">
 
@@ -60,7 +60,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="seriesId">Series Id</label>
-                                        <input type="text" class="form-control" id="seriesId" name="seriesId">
+                                        <input type="text" class="form-control" id="seriesId" name="seriesId" value="">
                                     </div>
                                 </div>
 
@@ -86,7 +86,7 @@
 
                                     <div class="form-group">
                                         <label for="keywords">Keywords <small>(common separated)</small></label>
-                                        <input type="text" class="form-control" id="keywords" name="keywords" placeholder="Keywords">
+                                        <input type="text" class="form-control" id="keywords" name="keywords" value="test" placeholder="Keywords">
                                     </div>
 
                                 </div>
@@ -202,7 +202,7 @@
                         </form>
 
                     </div>
-                    <div id="tab-pane-highlight" role="tabpanel" class="tab-pane active">
+                    <div id="tab-pane-highlight" role="tabpanel" class="tab-pane">
 
 
                         <form id="form-hightlight">
@@ -307,12 +307,16 @@
 
                             <div class="col-md-8">
 
-                                <h2>Title</h2>
+                                <h3 id="s-n-title">Title</h3>
 
                             </div>
                             <div class="col-md-4">
 
-                                <h2><i class="fa fa-play-circle-o"></i></h2>
+                                <h2 id="s-n-url">
+                                    <a class="btn btn-default" href="http://www.smithsonianchannel.com/videos/an-intense-blackhawk-rescue-mission-in-peril/38259" target="_blank">
+                                        <i class="fa fa-play-circle-o"></i>
+                                    </a>
+                                </h2>
 
                             </div>
 
@@ -322,29 +326,28 @@
 
                             <div class="col-md-4">
                                 <label>Id</label>
-                                <p>123456</p>
+                                <p id="s-n-id">123456</p>
                             </div>
 
                             <div class="col-md-8">
                                 <label>Type</label>
-                                <p>Trailer</p>
+                                <p id="s-n-type">Trailer</p>
                             </div>
 
                         </div>
-
                         <div class="row">
 
                             <div class="col-md-4">
                                 <label>Series Id</label>
-                                <p>323</p>
+                                <p id="s-n-series-id"></p>
                             </div>
                             <div class="col-md-4">
                                 <label>Season #</label>
-                                <p>2</p>
+                                <p id="s-n-season-number"></p>
                             </div>
                             <div class="col-md-4">
                                 <label>Show Id</label>
-                                <p>12345</p>
+                                <p id="s-n-show-id"></p>
                             </div>
 
                         </div>
@@ -354,7 +357,7 @@
                             <div class="col-md-12">
 
                                 <h3>Description</h3>
-                                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tempus dapibus erat, ut condimentum sem condimentum non. Ut efficitur dui convallis mi convallis, a tempus nibh gravida. Curabitur ipsum diam, consectetur id neque at, blandit commodo augue.</p>
+                                <p id="s-n-description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tempus dapibus erat, ut condimentum sem condimentum non. Ut efficitur dui convallis mi convallis, a tempus nibh gravida. Curabitur ipsum diam, consectetur id neque at, blandit commodo augue.</p>
 
 
                             </div>
@@ -366,7 +369,7 @@
 
                                 <h3>Connections</h3>
 
-                                <table class="table">
+                                <table id="s-n-c-tbl" class="table">
                                     <thead>
                                         <tr>
                                             <th></th>
@@ -420,17 +423,17 @@
                             <svg ></svg>
 
                             <div id="n-dialog" class="chart-dialog well">
-                                <h4 id="title">Video Title</h4>
+                                <h4 id="n-d-title">Video Title</h4>
                                 <div class="row">
 
                                     <div class="col-md-4">
                                         <label>Id</label>
-                                        <p id="id">123456</p>
+                                        <p id="n-d-id">123456</p>
                                     </div>
 
                                     <div class="col-md-8">
                                         <label>Type</label>
-                                        <p id="type">Trailer</p>
+                                        <p id="n-d-type">Trailer</p>
                                     </div>
 
                                 </div>
@@ -438,20 +441,30 @@
 
                                     <div class="col-md-4">
                                         <label>Series Id</label>
-                                        <p id="series-id"></p>
+                                        <p id="n-d-series-id"></p>
                                     </div>
                                     <div class="col-md-4">
                                         <label>Season #</label>
-                                        <p id="season-number"></p>
+                                        <p id="n-d-season-number"></p>
                                     </div>
                                     <div class="col-md-4">
                                         <label>Show Id</label>
-                                        <p id="show-id"></p>
+                                        <p id="n-d-show-id"></p>
                                     </div>
 
                                 </div>
 
-                                <a class="btn btn-default btn-block" href="#" role="button">Select</a>
+                                <p>
+                                <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
+                                </p>
+                                <div id="d-n-has-selected-pane">
+                                    <p>
+                                    <a id="d-n-this-to-selected-btn" class="btn btn-default btn-block" href="#" role="button">Connect This Video to Selected</a>
+                                    </p>
+                                    <p>
+                                    <a id="d-n-selected-to-this-btn" class="btn btn-default btn-block" href="#" role="button">Connect Selected to This Video</a>
+                                    </p>
+                                </div>
                             </div>
 
                             <div id="l-dialog" class="chart-dialog well">
@@ -459,7 +472,9 @@
                                     <h5 id="source"></h5>
                                 </p>
                                 <p>
-                                    <a href="#" class="btn btn-default"><i class="fa fa-link"></i></a>
+                                    <a id="l-btn" href="#" class="btn btn-default btn-lg">
+                                        <i class="fa fa-link"></i>
+                                    </a>
                                 </p>
                                 <p>
                                     <h5 id="target"></h5>

@@ -8,12 +8,22 @@ define(["common"], function (common) {
             width,
             height,
             svg,
-            nodeDialog,
-            linkDialog,
+            node,
+            link,
             data,
             typeColorScale = d3.scale.category20(),
             ratingColorScale = d3.scale.category20(),
-            otherColorScale = d3.scale.category10();
+            otherColorScale = d3.scale.category10(),
+            force = d3.layout.force()
+                .linkStrength(0.1)
+                .friction(0.9)
+                .distance(400)
+                .gravity(0.05)
+                .charge(-50)
+                .gravity(0.1)
+                .theta(0.8)
+                .alpha(0.1)
+            ;
 
         set(config);
 
@@ -67,74 +77,124 @@ define(["common"], function (common) {
             return typeColorArray;
         };
 
-        this.display = function(){
+        this.clear = function(){
 
-            var node,
-                link,
-                nodes = data.get('nodes'),
-                links = data.get('links');
+            svg.selectAll("*").remove();
+        };
 
-            force = d3.layout.force()
-                .linkStrength(0.1)
-                .friction(0.9)
-                .distance(400)
-                .gravity(0.05)
-                .charge(-50)
-                .gravity(0.1)
-                .theta(0.8)
-                .alpha(0.1)
-                .size([width, height]);
 
-            force.nodes(nodes).links(links).start();
 
-            svg.on('click', function(){
+        function focusOnNode(nId){
 
-                if(!nodeDialog.empty()){
-                    nodeDialog.style("visibility", "hidden");
-                }
+            resetVisuals();
 
-                if(!linkDialog.empty()){
-                    linkDialog.style("visibility", "hidden");
-                }
-            });
+            svg.selectAll('line:not(.s-' + nId + ')').transition().style({'opacity': 0.1, 'pointer-events': 'none'});
+            svg.selectAll('circle:not(.g-' + nId + ')').transition().style({'opacity': 0.1});
+        }
+
+        this.focusOnNode = function(nId){
+
+            focusOnNode(nId);
+        };
+
+        this.makeLink = function(sourceId, targetId){
+
+            var l = data.makeLink(sourceId, targetId);
+
+            svg.select('#' + l.target.id).classed('g-' + l.source.id, true);
+
+            display();
+
+            resetVisuals();
+        };
+
+        this.breakLink = function(lId){
+
+            var links, l;
+
+            l = data.removeLink(lId);
+
+            svg.select('#' + l.target.id).classed('g-' + l.source.id, false);
+
+            //links = data.get('links');
+
+            //force.nodes(data.get('nodes')).links(links).start();
+            //force.start();
+
+            removeLinks();
+
+            resetVisuals();
+
+        };
+
+        function removeLinks(){
+
+            link.data(force.links(), function(d) { return d.id; })
+                .exit()
+                .remove();
+        }
+
+        function updateDisplay(){
+
+            node = svg.selectAll(".node")
+                .data(force.nodes(), function(d) { return d.id; });
 
             link = svg.selectAll(".link")
-                .data(links)
+                .data(force.links(), function(d) { return d.id; });
+
+            force.on("tick", function() {
+
+                link.attr("x1", function(d) { return d.source.x; })
+                    .attr("y1", function(d) { return d.source.y; })
+                    .attr("x2", function(d) { return d.target.x; })
+                    .attr("y2", function(d) { return d.target.y; });
+
+                node.attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
+            });
+        }
+
+        function display(){
+
+            force.nodes(data.get('nodes')).links(data.get('links')).start();
+
+            link = svg.selectAll(".link")
+                .data(force.links(), function(d) { return d.id; })
                 .enter().append("line")
                 .attr("id", function(d, i){
                     return "l-" + d.id;
                 })
-                .attr("class", "link")
+                .attr("class", function(d, i){
+                    return d.class;
+                })
                 .style("stroke-width", function (d) {
-                    return Math.log(d.weight);
+                    return d.weight;
                 })
                 .on('mouseover', function(d, i){
 
-                    var mouse = d3.mouse(this);
+                    var mouse;
 
-                    if(linkDialog.empty()){
+                    if(!d3.event.shiftKey){
                         return;
                     }
 
-                    if(!nodeDialog.empty()){
-                        nodeDialog.style("visibility", "hidden");
-                    }
+                    config.hideNodeDialog();
 
-                    linkDialog.style("left", mouse[0] + "px")
-                        .style("top", mouse[1] + "px");
+                    mouse = d3.mouse(this);
 
-                    linkDialog.select("#source").text(d.source.title);
-                    linkDialog.select("#target").text(d.target.title);
+                    config.populateLinkDialog(d);
 
-                    //Show the dialog
-                    linkDialog.style("visibility", "visible");
+                    config.setLinkDialogLocation({
+                        left: mouse[0] + "px",
+                        top: mouse[1] + "px"
+                    });
                 });
 
             node = svg.selectAll(".node")
-                .data(nodes)
+                .data(force.nodes(), function(d) { return d.id; })
                 .enter().append("circle")
                 .attr("id", function(d, i){
-                    return "n-" + d.id;
+                    return d.id;
                 })
                 .attr("class", function(d, i){
                     return d.class;
@@ -148,33 +208,27 @@ define(["common"], function (common) {
 
                     return Math.log(parseInt(weight)* 100);
                 })
+                .attr("data-group", function(d, i){
+                    return d.group;
+                })
                 .on('mouseover', function(d, i){
 
                     var circle;
 
-                    if(nodeDialog.empty()){
+                    if(!d3.event.shiftKey){
                         return;
                     }
 
+                    config.hideLinkDialog();
+
                     circle = d3.select(this);
 
-                    if(!linkDialog.empty()){
-                        linkDialog.style("visibility", "hidden");
-                    }
+                    config.setNodeDialogLocation({
+                        left: circle.attr("cx") + "px",
+                        top: circle.attr("cy") + "px"
+                    });
 
-                    nodeDialog.style("left", circle.attr("cx") + "px")
-                        .style("top", circle.attr("cy") + "px");
-
-                    nodeDialog.select("#id").text(d.id);
-                    nodeDialog.select("#title").text(d.title);
-                    nodeDialog.select("#type").text(d.type);
-
-                    nodeDialog.select("#series-id").text(d.seriesId);
-                    nodeDialog.select("#season-number").text(d.seasonNumber);
-                    nodeDialog.select("#show-id").text(d.showId);
-
-                    //Show the dialog
-                    nodeDialog.style("visibility", "visible");
+                    config.populateNodeDialog(d);
                 });
 
             node.append("title")
@@ -182,16 +236,18 @@ define(["common"], function (common) {
                     return d.title;
                 });
 
-            force.on("tick", function() {
+            updateDisplay();
+        }
 
-                link.attr("x1", function(d) { return d.source.x; })
-                    .attr("y1", function(d) { return d.source.y; })
-                    .attr("x2", function(d) { return d.target.x; })
-                    .attr("y2", function(d) { return d.target.y; });
+        function resetVisuals(){
 
-                node.attr("cx", function(d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; });
-            });
+            svg.selectAll('line').style({'opacity': 1.0, 'pointer-events': 'auto'});
+            svg.selectAll('circle').style({'opacity': 1.0});
+        }
+
+        this.display = function(){
+
+            display();
         };
 
         function set(config) {
@@ -206,10 +262,21 @@ define(["common"], function (common) {
                     if(exists) {
 
                         svg = frame.select("svg");
-                        nodeDialog = frame.select("#n-dialog");
-                        linkDialog = frame.select("#l-dialog");
+                        //svg = frame.select("svg").call(d3.behavior.zoom().on("zoom", function () {
+                        //    svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+                        //}));
+
+                        svg.on('click', function(){
+
+                            config.hideNodeDialog();
+                            config.hideLinkDialog();
+
+                        });
+
                         width = parseInt(svg.style("width"), 10);
                         height = parseInt(svg.style("height"), 10);
+
+                        force.size([width, height]);
                     }
                 }
 
