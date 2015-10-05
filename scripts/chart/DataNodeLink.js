@@ -47,7 +47,8 @@ define(["common"],
                         rId,
                         mId,
                         aId,
-                        ttId
+                        ttId,
+                        "g-" + id
                     ];
 
                 node = {
@@ -191,10 +192,8 @@ define(["common"],
                     cNode = {
                         connectionArray: []
                     };
-
-                    sNode.class = sNode.class + ' g-' + sNode.id;
                 }
-
+                
                 tNode.class = tNode.class + ' g-' + sNode.id;
 
                 cNode.connectionArray.push({
