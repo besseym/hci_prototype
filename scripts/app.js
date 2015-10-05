@@ -15,6 +15,22 @@ require(
             dataNodeLink,
             nodeLinkChart,
 
+            flashSuccess = $("#flash-success"),
+            flashSuccessCloseBtn = flashSuccess.find("#btn-close-success"),
+            flashSuccessMsg = flashSuccess.find("#flash-success-msg"),
+
+            flashInfo = $("#flash-info"),
+            flashInfoCloseBtn = flashInfo.find("#btn-close-info"),
+            flashInfoMsg = flashInfo.find("#flash-info-msg"),
+
+            flashWarning = $("#flash-warning"),
+            flashWarningCloseBtn = flashWarning.find("#btn-close-warning"),
+            flashWarningMsg = flashWarning.find("#flash-warning-msg"),
+
+            flashDanger = $("#flash-danger"),
+            flashDangerCloseBtn = flashDanger.find("#btn-close-danger"),
+            flashDangerMsg = flashDanger.find("#flash-danger-msg"),
+
             nodeDialog = $("#n-dialog"),
             nodeDialogSelectBtn = nodeDialog.find("#d-n-select-btn"),
             nodeDialogThisToSelectedBtn = nodeDialog.find("#d-n-this-to-selected-btn"),
@@ -27,7 +43,6 @@ require(
             connectionTableBody = selectTabPane.find("#s-n-c-tbl tbody");
 
         //intialize
-
 
         function populateNodeDialog(d){
 
@@ -216,6 +231,9 @@ require(
                     focusHighlightTab();
                     focusVizContent();
                 });
+            }
+            else {
+                showWarningMsg("The search criteria you provided returned too many search results. Please refine your search.");
             }
 
             event.preventDefault();
@@ -408,6 +426,50 @@ require(
 
             $('#content-overview').css("display", "none");
             $('#content-viz').css("display", null);
+        }
+
+        flashSuccessCloseBtn.on("click", function(event){
+
+            flashSuccess.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashInfoCloseBtn.on("click", function(event){
+
+            flashInfo.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashWarningCloseBtn.on("click", function(event){
+
+            flashWarning.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashDangerCloseBtn.on("click", function(event){
+
+            flashDanger.css("display", "none");
+            event.preventDefault();
+        });
+
+        function showSuccessMsg(msg){
+            flashSuccessMsg.text(msg);
+            flashSuccess.css("display", "block");
+        }
+
+        function showInfoMsg(msg){
+            flashInfoMsg.text(msg);
+            flashInfo.css("display", "block");
+        }
+
+        function showWarningMsg(msg){
+            flashWarningMsg.text(msg);
+            flashWarning.css("display", "block");
+        }
+
+        function showDangerMsg(msg){
+            flashDangerMsg.text(msg);
+            flashDanger.css("display", "block");
         }
 
     }
