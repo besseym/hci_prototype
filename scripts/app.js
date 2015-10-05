@@ -126,6 +126,11 @@ require(
 
                     switch(field.value){
 
+                        case "701":
+                            graph = "graph_series_701.json";
+                            isMatch = true;
+                            break;
+
                         case "1003303":
                             graph = "graph_series_1003303.json";
                             isMatch = true;
@@ -164,6 +169,11 @@ require(
 
                         case "crime":
                             graph = "graph_crime.json";
+                            isMatch = true;
+                            break;
+
+                        case "robots":
+                            graph = "graph_robots.json";
                             isMatch = true;
                             break;
                     }
