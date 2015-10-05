@@ -174,9 +174,9 @@ define(["common"], function (common) {
 
                     var mouse;
 
-                    if(!d3.event.shiftKey){
-                        return;
-                    }
+                    //if(!d3.event.shiftKey){
+                    //    return;
+                    //}
 
                     config.hideNodeDialog();
 
@@ -215,9 +215,9 @@ define(["common"], function (common) {
 
                     var circle;
 
-                    if(!d3.event.shiftKey){
-                        return;
-                    }
+                    //if(!d3.event.shiftKey){
+                    //    return;
+                    //}
 
                     config.hideLinkDialog();
 
