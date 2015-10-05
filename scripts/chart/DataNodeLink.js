@@ -193,7 +193,7 @@ define(["common"],
                         connectionArray: []
                     };
                 }
-                
+
                 tNode.class = tNode.class + ' g-' + sNode.id;
 
                 cNode.connectionArray.push({
