@@ -21,12 +21,20 @@ require(
             nodeDialogSelectedToThisBtn = nodeDialog.find("#d-n-selected-to-this-btn"),
 
             linkDialog = $("#l-dialog"),
-            linkDialogBtn = linkDialog.find("#l-btn");
+            linkDialogBtn = linkDialog.find("#l-btn"),
+
+            selectTabPane = $("#tab-pane-select"),
+            connectionTableBody = selectTabPane.find("#s-n-c-tbl tbody");
 
         //intialize
 
 
         function populateNodeDialog(d){
+
+            var hasSelected = !common.isUndefined(selectedNodeId),
+                isSelectedNode = selectedNodeId === d.id,
+                isConnectedToSelected,
+                selectBlk, thisToSelectedBlk, selectedToThisBlk;
 
             nodeDialog.find("#n-d-id").text(d.id);
             nodeDialog.find("#n-d-title").text(d.title);
@@ -35,6 +43,31 @@ require(
             nodeDialog.find("#n-d-series-id").text(d.seriesId);
             nodeDialog.find("#n-d-season-number").text(d.seasonNumber);
             nodeDialog.find("#n-d-show-id").text(d.showId);
+
+            if(hasSelected && !isSelectedNode){
+                isConnectedToSelected = dataNodeLink.isConnected(selectedNodeId, d.id);
+            }
+
+            selectBlk = nodeDialog.find("#d-n-select");
+            if(!hasSelected || !isSelectedNode ){
+                selectBlk.css("display", "block");
+            }
+            else {
+                selectBlk.css("display", "none");
+            }
+
+            thisToSelectedBlk = nodeDialog.find("#d-n-this-to-selected");
+            selectedToThisBlk = nodeDialog.find("#d-n-selected-to-this");
+            if(hasSelected && !isSelectedNode && !isConnectedToSelected){
+
+                thisToSelectedBlk.css("display", "block");
+                selectedToThisBlk.css("display", "block");
+            }
+            else {
+
+                thisToSelectedBlk.css("display", "none");
+                selectedToThisBlk.css("display", "none");
+            }
         }
 
         function setNodeDialogLocation(location){
@@ -171,6 +204,7 @@ require(
                     nodeLinkChart.display();
 
                     focusHighlightTab();
+                    focusVizContent();
                 });
             }
 
@@ -217,8 +251,13 @@ require(
         //link dialog actions
         linkDialogBtn.on('click', function( event ) {
 
-            var id = $(this).attr('href');
+            var id = $(this).attr('href'),
+                connectionRow = connectionTableBody.find("#s-" + id);
             nodeLinkChart.breakLink(id);
+
+            if(connectionRow.length > 0){
+                connectionRow.remove();
+            }
 
             event.preventDefault();
         });
@@ -237,9 +276,7 @@ require(
 
             var j,
                 connection,
-                connectionTableBody,
                 connectionBtnArray,
-                selectTabPane = $("#tab-pane-select"),
                 connectOutArray = [];
 
             selectTabPane.find("#s-n-title").text(d.title);
@@ -253,7 +290,6 @@ require(
 
             selectTabPane.find("#s-n-url a").attr('href', d.url);
 
-            connectionTableBody = selectTabPane.find("#s-n-c-tbl tbody");
             connectionTableBody.empty();
 
             //console.log(connect);
@@ -300,6 +336,16 @@ require(
 
                 $(this).children('i').removeClass( "fa-chain-broken" ).addClass( "fa-link" );
             });
+
+            connectionBtnArray.on("click", function(event){
+
+                var id = $(this).attr('href');
+                nodeLinkChart.breakLink(id);
+
+                connectionTableBody.find("#s-" + id).remove();
+
+                event.preventDefault();
+            });
         }
 
         function buildColorKey(typeColorArray){
@@ -338,12 +384,20 @@ require(
 
         function focusHighlightTab() {
 
+            $('#nav-tab-hightlight').css("visibility", "visible");
             $('#tabs-dialog a[href="#tab-pane-highlight"]').tab('show');
         }
 
         function focusSelectTab() {
 
+            $('#nav-tab-select').css("visibility", "visible");
             $('#tabs-dialog a[href="#tab-pane-select"]').tab('show');
+        }
+
+        function focusVizContent() {
+
+            $('#content-overview').css("display", "none");
+            $('#content-viz').css("display", null);
         }
 
     }

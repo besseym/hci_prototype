@@ -123,7 +123,7 @@ define(["common"], function (common) {
 
             removeLinks();
 
-            resetVisuals();
+            //resetVisuals();
 
         };
 

@@ -25,10 +25,10 @@
                     <li id="nav-tab-search" role="presentation" class="active">
                         <a href="#tab-pane-search" data-toggle="tab">Search</a>
                     </li>
-                    <li id="nav-tab-hightlight" role="presentation" >
+                    <li id="nav-tab-hightlight" role="presentation" style="visibility: hidden;" >
                         <a href="#tab-pane-highlight" data-toggle="tab">Highlight</a>
                     </li>
-                    <li id="nav-tab-select" role="presentation">
+                    <li id="nav-tab-select" role="presentation" style="visibility: hidden;">
                         <a href="#tab-pane-select" data-toggle="tab">Select</a>
                     </li>
                 </ul>
@@ -407,17 +407,16 @@
 
                 <div id="content-main" >
 
-                    <div id="content-overview" style="display: none;">
+                    <div id="content-overview">
 
                         <div class="jumbotron">
                             <h1>Welcome</h1>
-                            <p>...</p>
-                            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+                            <p>Begin the video connection process by performing a search.</p>
                         </div>
 
                     </div>
 
-                    <div id="content-viz">
+                    <div id="content-viz" style="display: none;">
 
                         <div id="chart-graph-video" class="chart chart-graph">
                             <svg ></svg>
@@ -454,17 +453,15 @@
 
                                 </div>
 
-                                <p>
-                                <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
+                                <p id="d-n-select">
+                                    <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
                                 </p>
-                                <div id="d-n-has-selected-pane">
-                                    <p>
+                                <p id="d-n-this-to-selected">
                                     <a id="d-n-this-to-selected-btn" class="btn btn-default btn-block" href="#" role="button">Connect This Video to Selected</a>
-                                    </p>
-                                    <p>
+                                </p>
+                                <p id="d-n-selected-to-this">
                                     <a id="d-n-selected-to-this-btn" class="btn btn-default btn-block" href="#" role="button">Connect Selected to This Video</a>
-                                    </p>
-                                </div>
+                                </p>
                             </div>
 
                             <div id="l-dialog" class="chart-dialog well">

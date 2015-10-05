@@ -117,11 +117,8 @@ define(["common"],
 
             function removeLink(lId){
 
-                var i, k, index, connect, connection, link;
+                var i, k, index, cNode, connect, link;
 
-                //link = links[lIndex];
-                //lId = link.id;
-                //
                 link = linkMap[lId];
 
                 index = -1;
@@ -137,27 +134,24 @@ define(["common"],
                     links.splice(index, 1);
                 }
 
-                /*
-                for(k in nodeConnectMap){
+                cNode = nodeConnectMap[link.source.id];
+                if(!common.isUndefined(cNode)) {
 
                     index = -1;
+                    for (i = 0; i < cNode.connectionArray.length; i++) {
 
-                    connect = nodeConnectMap[k];
-                    for(i = 0; i < connect.connectionArray.length; i++){
-
-                        connection = connect.connectionArray[i];
-                        if(connection.l.id === lId){
+                        connect = cNode.connectionArray[i];
+                        if (connect.l.id === lId) {
 
                             index = i;
                             break;
                         }
                     }
 
-                    if(index > 0){
-                        connect.connectionArray.splice(index, 1);
-                        break;
+                    if (index >= 0) {
+                        cNode.connectionArray.splice(index, 1);
                     }
-                }*/
+                }
 
                 linkMap[lId] = undefined;
 
@@ -212,6 +206,27 @@ define(["common"],
 
                 return link;
             }
+
+            this.isConnected = function(sourceId, targetId){
+
+                var isConnected = false,
+                    cNode = nodeConnectMap[sourceId],
+                    connect;
+
+                if(!common.isUndefined(cNode)){
+
+                    for(i = 0; i < cNode.connectionArray.length; i++){
+
+                        connect = cNode.connectionArray[i];
+                        if(connect.n.id === targetId){
+                            isConnected = true;
+                            break;
+                        }
+                    }
+                }
+
+                return isConnected;
+            };
 
             this.makeLink = function(sourceId, targetId){
 
