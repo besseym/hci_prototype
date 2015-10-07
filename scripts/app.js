@@ -12,6 +12,9 @@ require(
 
         var selectedNodeId,
 
+            p,
+            parameterMap = common.getParameterMap(),
+
             dataNodeLink,
             nodeLinkChart,
 
@@ -27,7 +30,22 @@ require(
             connectionTableBody = selectTabPane.find("#s-n-c-tbl tbody");
 
         //intialize
+        if(!common.isUndefined(parameterMap)){
 
+            for(p in parameterMap){
+
+                switch(p){
+                    case 'content':
+
+                        if(parameterMap[p] === 'matrix'){
+                            focusHighlightTab();
+                            focusMatrixContent();
+                        }
+
+                        break;
+                }
+            }
+        }
 
         function populateNodeDialog(d){
 
@@ -397,7 +415,15 @@ require(
         function focusVizContent() {
 
             $('#content-overview').css("display", "none");
-            $('#content-viz').css("display", null);
+            $('#content-viz').css("display", "block");
+            $('#content-matrix').css("display", "none");
+        }
+
+        function focusMatrixContent() {
+
+            $('#content-overview').css("display", "none");
+            $('#content-viz').css("display", "none");
+            $('#content-matrix').css("display", "block");
         }
 
     }
