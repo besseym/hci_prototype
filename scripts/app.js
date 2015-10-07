@@ -18,6 +18,22 @@ require(
             dataNodeLink,
             nodeLinkChart,
 
+            flashSuccess = $("#flash-success"),
+            flashSuccessCloseBtn = flashSuccess.find("#btn-close-success"),
+            flashSuccessMsg = flashSuccess.find("#flash-success-msg"),
+
+            flashInfo = $("#flash-info"),
+            flashInfoCloseBtn = flashInfo.find("#btn-close-info"),
+            flashInfoMsg = flashInfo.find("#flash-info-msg"),
+
+            flashWarning = $("#flash-warning"),
+            flashWarningCloseBtn = flashWarning.find("#btn-close-warning"),
+            flashWarningMsg = flashWarning.find("#flash-warning-msg"),
+
+            flashDanger = $("#flash-danger"),
+            flashDangerCloseBtn = flashDanger.find("#btn-close-danger"),
+            flashDangerMsg = flashDanger.find("#flash-danger-msg"),
+
             nodeDialog = $("#n-dialog"),
             nodeDialogSelectBtn = nodeDialog.find("#d-n-select-btn"),
             nodeDialogThisToSelectedBtn = nodeDialog.find("#d-n-this-to-selected-btn"),
@@ -144,6 +160,11 @@ require(
 
                     switch(field.value){
 
+                        case "701":
+                            graph = "graph_series_701.json";
+                            isMatch = true;
+                            break;
+
                         case "1003303":
                             graph = "graph_series_1003303.json";
                             isMatch = true;
@@ -182,6 +203,11 @@ require(
 
                         case "crime":
                             graph = "graph_crime.json";
+                            isMatch = true;
+                            break;
+
+                        case "robots":
+                            graph = "graph_robots.json";
                             isMatch = true;
                             break;
                     }
@@ -224,6 +250,9 @@ require(
                     focusHighlightTab();
                     focusVizContent();
                 });
+            }
+            else {
+                showWarningMsg("The search criteria you provided returned too many search results. Please refine your search.");
             }
 
             event.preventDefault();
@@ -416,14 +445,50 @@ require(
 
             $('#content-overview').css("display", "none");
             $('#content-viz').css("display", "block");
-            $('#content-matrix').css("display", "none");
         }
 
-        function focusMatrixContent() {
+        flashSuccessCloseBtn.on("click", function(event){
 
-            $('#content-overview').css("display", "none");
-            $('#content-viz').css("display", "none");
-            $('#content-matrix').css("display", "block");
+            flashSuccess.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashInfoCloseBtn.on("click", function(event){
+
+            flashInfo.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashWarningCloseBtn.on("click", function(event){
+
+            flashWarning.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashDangerCloseBtn.on("click", function(event){
+
+            flashDanger.css("display", "none");
+            event.preventDefault();
+        });
+
+        function showSuccessMsg(msg){
+            flashSuccessMsg.text(msg);
+            flashSuccess.css("display", "block");
+        }
+
+        function showInfoMsg(msg){
+            flashInfoMsg.text(msg);
+            flashInfo.css("display", "block");
+        }
+
+        function showWarningMsg(msg){
+            flashWarningMsg.text(msg);
+            flashWarning.css("display", "block");
+        }
+
+        function showDangerMsg(msg){
+            flashDangerMsg.text(msg);
+            flashDanger.css("display", "block");
         }
 
     }
