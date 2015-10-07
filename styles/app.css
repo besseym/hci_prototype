@@ -9700,4 +9700,180 @@ circle.node {
   position: absolute;
 }
 
+#content-matrix table {
+  border-collapse: collapse;
+}
+#content-matrix table td, #content-matrix table th {
+  padding: 2px 5px;
+  margin: 0;
+}
+#content-matrix table thead th {
+  /* Something you can count on */
+  height: 300px;
+  white-space: nowrap;
+  font-weight: normal;
+}
+#content-matrix table thead th > div {
+  /* Safari */
+  -webkit-transform: translate(10px, 130px) rotate(-35deg);
+  /* Firefox */
+  -moz-transform: translate(10px, 130px) rotate(-90deg);
+  /* IE */
+  -ms-transform: translate(10px, 130px) rotate(-90deg);
+  /* Opera */
+  -o-transform: translate(10px, 130px) rotate(-90deg);
+  width: 30px;
+}
+#content-matrix table tbody tr td {
+  text-align: right;
+}
+#content-matrix table tbody tr td div {
+  background-color: #EfEfEf;
+}
+#content-matrix table tbody tr:nth-child(1) td:nth-child(4) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(1) td:nth-child(6) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(1) td:nth-child(7) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(1) td:nth-child(9) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(1) td:nth-child(10) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(2) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(2) td:nth-child(4) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(2) td:nth-child(6) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(2) td:nth-child(9) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(2) td:nth-child(10) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(3) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(3) td:nth-child(6) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(3) td:nth-child(7) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(3) td:nth-child(9) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(3) td:nth-child(10) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(4) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(4) td:nth-child(4) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(4) td:nth-child(6) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(4) td:nth-child(9) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(4) td:nth-child(10) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(5) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(5) td:nth-child(7) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(5) td:nth-child(8) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(5) td:nth-child(9) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(5) td:nth-child(10) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(6) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(6) td:nth-child(6) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(6) td:nth-child(8) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(6) td:nth-child(9) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(6) td:nth-child(10) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(7) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(7) td:nth-child(6) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(7) td:nth-child(7) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(7) td:nth-child(9) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(7) td:nth-child(10) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(8) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(8) td:nth-child(4) div {
+  background-color: #67e467;
+}
+#content-matrix table tbody tr:nth-child(8) td:nth-child(6) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(8) td:nth-child(7) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(8) td:nth-child(10) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(9) td:nth-child(2) div {
+  background-color: #a8f0a8;
+}
+#content-matrix table tbody tr:nth-child(9) td:nth-child(6) div {
+  background-color: #26d926;
+}
+#content-matrix table tbody tr:nth-child(9) td:nth-child(8) div {
+  background-color: #1b981b;
+}
+#content-matrix table tbody tr:nth-child(9) td:nth-child(7) div {
+  background-color: #0f570f;
+}
+#content-matrix table tbody tr:nth-child(9) td:nth-child(9) div {
+  background-color: #67e467;
+}
+
+.page-footer {
+  border-top: 1px solid #e5e5e5;
+  margin: 50px 0 0 0;
+  padding: 20px 0px;
+}
+.page-footer p {
+  margin: 0 auto;
+  width: 60%;
+}
+
 /*# sourceMappingURL=app.css.map */

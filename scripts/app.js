@@ -445,6 +445,14 @@ require(
 
             $('#content-overview').css("display", "none");
             $('#content-viz').css("display", "block");
+            $('#content-matrix').css("display", "none");
+        }
+
+        function focusMatrixContent() {
+
+            $('#content-overview').css("display", "none");
+            $('#content-viz').css("display", "none");
+            $('#content-matrix').css("display", "block");
         }
 
         flashSuccessCloseBtn.on("click", function(event){
