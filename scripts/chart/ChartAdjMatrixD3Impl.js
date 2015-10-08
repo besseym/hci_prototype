@@ -1,4 +1,4 @@
-define(["common", "Chart"], function (common) {
+define(["common", "chart/Chart"], function (common, Chart) {
 
     //start bar chart
     var ChartAdjMatrix = function (config, parent) {
@@ -8,10 +8,29 @@ define(["common", "Chart"], function (common) {
             width,
             height,
             svg,
+            xScale,
+            yScale,
             data;
 
         //config the object
         set(config);
+
+        function updateScale(dSet){
+
+            var domainMap = function(d) { return d.id; };
+
+            xScale = d3.scale.ordinal().domain(dSet.map(domainMap)).rangeRoundBands(parent.get("rangeX"), sep);
+            yScale = d3.scale.ordinal().domain(dSet.map(domainMap)).rangeRoundBands(parent.get("rangeY"), sep);
+        }
+
+        function display(){
+
+        }
+
+        this.display = function(){
+
+            display();
+        };
 
         function set(config) {
 
@@ -63,8 +82,8 @@ define(["common", "Chart"], function (common) {
     return {
 
         getInstance: function(config) {
-            var parent = new Chart(config);
-            ChartAxis.prototype = parent;
+            var parent = Chart.getInstance(config);
+            ChartAdjMatrix.prototype = parent;
             return new ChartAdjMatrix(config, parent);
         }
     };

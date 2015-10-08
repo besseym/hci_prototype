@@ -6,9 +6,9 @@ requirejs.config({
 
 require(
     [
-        "common", "chart/chartUtil", "chart/DataNodeLink", "chart/ChartNodeLink"
+        "common", "chart/chartUtil", "chart/DataNodeLink", "chart/ChartNodeLink", "chart/ChartAdjMatrixD3Impl"
     ],
-    function(common, chartUtil, DataNodeLink, ChartNodeLink) {
+    function(common, chartUtil, DataNodeLink, ChartNodeLink, ChartAdjMatrix) {
 
         var selectedNodeId,
 
@@ -17,6 +17,7 @@ require(
 
             dataNodeLink,
             nodeLinkChart,
+            adjMatrixChart,
 
             flashSuccess = $("#flash-success"),
             flashSuccessCloseBtn = flashSuccess.find("#btn-close-success"),
@@ -159,27 +160,32 @@ require(
 
                     dataNodeLink = DataNodeLink.getInstance(data);
 
-                    nodeLinkChart = ChartNodeLink.getInstance({
+                    //nodeLinkChart = ChartNodeLink.getInstance({
+                    //
+                    //    selector: "#chart-graph-video",
+                    //    data: dataNodeLink,
+                    //
+                    //    focusSelectTab: focusSelectTab,
+                    //    buildSelectPanel: buildSelectPanel,
+                    //
+                    //    populateNodeDialog: populateNodeDialog,
+                    //    setNodeDialogLocation: setNodeDialogLocation,
+                    //    hideNodeDialog: hideNodeDialog,
+                    //
+                    //    populateLinkDialog: populateLinkDialog,
+                    //    setLinkDialogLocation: setLinkDialogLocation,
+                    //    hideLinkDialog: hideLinkDialog
+                    //});
 
-                        selector: "#chart-graph-video",
-                        data: dataNodeLink,
-
-                        focusSelectTab: focusSelectTab,
-                        buildSelectPanel: buildSelectPanel,
-
-                        populateNodeDialog: populateNodeDialog,
-                        setNodeDialogLocation: setNodeDialogLocation,
-                        hideNodeDialog: hideNodeDialog,
-
-                        populateLinkDialog: populateLinkDialog,
-                        setLinkDialogLocation: setLinkDialogLocation,
-                        hideLinkDialog: hideLinkDialog
+                    adjMatrixChart = ChartAdjMatrix.getInstance({
+                        selector: "#chart-matrix-video",
+                        data: dataNodeLink
                     });
-
-                    nodeLinkChart.display();
+                    adjMatrixChart.display();
 
                     focusHighlightTab();
-                    focusVizContent();
+                    //focusVizContent();
+                    focusMatrixContent();
                 });
             }
             else {
