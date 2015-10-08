@@ -63,75 +63,6 @@ require(
             }
         }
 
-        function populateNodeDialog(d){
-
-            var hasSelected = !common.isUndefined(selectedNodeId),
-                isSelectedNode = selectedNodeId === d.id,
-                isConnectedToSelected,
-                selectBlk, thisToSelectedBlk, selectedToThisBlk;
-
-            nodeDialog.find("#n-d-id").text(d.id);
-            nodeDialog.find("#n-d-title").text(d.title);
-            nodeDialog.find("#n-d-type").text(d.type);
-
-            nodeDialog.find("#n-d-series-id").text(d.seriesId);
-            nodeDialog.find("#n-d-season-number").text(d.seasonNumber);
-            nodeDialog.find("#n-d-show-id").text(d.showId);
-
-            if(hasSelected && !isSelectedNode){
-                isConnectedToSelected = dataNodeLink.isConnected(selectedNodeId, d.id);
-            }
-
-            selectBlk = nodeDialog.find("#d-n-select");
-            if(!hasSelected || !isSelectedNode ){
-                selectBlk.css("display", "block");
-            }
-            else {
-                selectBlk.css("display", "none");
-            }
-
-            thisToSelectedBlk = nodeDialog.find("#d-n-this-to-selected");
-            selectedToThisBlk = nodeDialog.find("#d-n-selected-to-this");
-            if(hasSelected && !isSelectedNode && !isConnectedToSelected){
-
-                thisToSelectedBlk.css("display", "block");
-                selectedToThisBlk.css("display", "block");
-            }
-            else {
-
-                thisToSelectedBlk.css("display", "none");
-                selectedToThisBlk.css("display", "none");
-            }
-        }
-
-        function setNodeDialogLocation(location){
-
-            nodeDialog.css("left", location.left).css("top", location.top).css("visibility", "visible");
-        }
-
-        function hideNodeDialog(){
-
-            nodeDialog.css("visibility", "hidden");
-        }
-
-        function populateLinkDialog(d){
-
-            linkDialog.find("#source").text(d.source.title);
-            linkDialog.find("#target").text(d.target.title);
-
-            linkDialog.find("#l-btn").attr("href", d.id);
-        }
-
-        function setLinkDialogLocation(location){
-
-            linkDialog.css("left", location.left).css("top", location.top).css("visibility", "visible");
-        }
-
-        function hideLinkDialog(){
-
-            linkDialog.css("visibility", "hidden");
-        }
-
         $( "#form-search" ).submit(function( event ) {
 
             var isMatch = false,
@@ -319,6 +250,99 @@ require(
             $(this).children('i').removeClass( "fa-chain-broken" ).addClass( "fa-link" );
         });
 
+        flashSuccessCloseBtn.on("click", function(event){
+
+            flashSuccess.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashInfoCloseBtn.on("click", function(event){
+
+            flashInfo.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashWarningCloseBtn.on("click", function(event){
+
+            flashWarning.css("display", "none");
+            event.preventDefault();
+        });
+
+        flashDangerCloseBtn.on("click", function(event){
+
+            flashDanger.css("display", "none");
+            event.preventDefault();
+        });
+
+        function populateNodeDialog(d){
+
+            var hasSelected = !common.isUndefined(selectedNodeId),
+                isSelectedNode = selectedNodeId === d.id,
+                isConnectedToSelected,
+                selectBlk, thisToSelectedBlk, selectedToThisBlk;
+
+            nodeDialog.find("#n-d-id").text(d.id);
+            nodeDialog.find("#n-d-title").text(d.title);
+            nodeDialog.find("#n-d-type").text(d.type);
+
+            nodeDialog.find("#n-d-series-id").text(d.seriesId);
+            nodeDialog.find("#n-d-season-number").text(d.seasonNumber);
+            nodeDialog.find("#n-d-show-id").text(d.showId);
+
+            if(hasSelected && !isSelectedNode){
+                isConnectedToSelected = dataNodeLink.isConnected(selectedNodeId, d.id);
+            }
+
+            selectBlk = nodeDialog.find("#d-n-select");
+            if(!hasSelected || !isSelectedNode ){
+                selectBlk.css("display", "block");
+            }
+            else {
+                selectBlk.css("display", "none");
+            }
+
+            thisToSelectedBlk = nodeDialog.find("#d-n-this-to-selected");
+            selectedToThisBlk = nodeDialog.find("#d-n-selected-to-this");
+            if(hasSelected && !isSelectedNode && !isConnectedToSelected){
+
+                thisToSelectedBlk.css("display", "block");
+                selectedToThisBlk.css("display", "block");
+            }
+            else {
+
+                thisToSelectedBlk.css("display", "none");
+                selectedToThisBlk.css("display", "none");
+            }
+        }
+
+        function setNodeDialogLocation(location){
+
+            nodeDialog.css("left", location.left).css("top", location.top).css("visibility", "visible");
+        }
+
+        function hideNodeDialog(){
+
+            nodeDialog.css("visibility", "hidden");
+        }
+
+        function populateLinkDialog(d){
+
+            linkDialog.find("#source").text(d.source.title);
+            linkDialog.find("#target").text(d.target.title);
+
+            linkDialog.find("#l-btn").attr("href", d.id);
+        }
+
+        function setLinkDialogLocation(location){
+
+            linkDialog.css("left", location.left).css("top", location.top).css("visibility", "visible");
+        }
+
+        function hideLinkDialog(){
+
+            linkDialog.css("visibility", "hidden");
+        }
+
         function buildSelectPanel(d, connect){
 
             var j,
@@ -454,30 +478,6 @@ require(
             $('#content-viz').css("display", "none");
             $('#content-matrix').css("display", "block");
         }
-
-        flashSuccessCloseBtn.on("click", function(event){
-
-            flashSuccess.css("display", "none");
-            event.preventDefault();
-        });
-
-        flashInfoCloseBtn.on("click", function(event){
-
-            flashInfo.css("display", "none");
-            event.preventDefault();
-        });
-
-        flashWarningCloseBtn.on("click", function(event){
-
-            flashWarning.css("display", "none");
-            event.preventDefault();
-        });
-
-        flashDangerCloseBtn.on("click", function(event){
-
-            flashDanger.css("display", "none");
-            event.preventDefault();
-        });
 
         function showSuccessMsg(msg){
             flashSuccessMsg.text(msg);
