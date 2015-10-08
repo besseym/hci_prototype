@@ -99,32 +99,34 @@ define(["common"], function (common) {
 
         function get(key){
 
-            if(key === "selector") {
-                return selector;
+            var value = null;
+
+            if(key === "data") {
+                value = data;
+            }
+            else if(key === "selector") {
+                value = selector;
             }
             else if(key === "width"){
-                return width;
+                value = width;
             }
             else if(key === "height") {
-                return height;
+                value = height;
             }
             else if(key === "padding") {
-                return padding;
+                value = padding;
             }
             else if(key === "transition") {
-                return transition;
+                value = transition;
             }
             else if(key === "rangeX") {
-                return [padding.left, width - padding.right];
+                value = [padding.left, width - padding.right];
             }
             else if(key === "rangeY") {
-                return [height - padding.bottom, padding.top];
-            }
-            else if(key === "data") {
-                return data;
+                value = [height - padding.bottom, padding.top];
             }
 
-            return null;
+            return value;
         }
 
         this.exists = function(){

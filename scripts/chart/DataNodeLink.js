@@ -22,6 +22,49 @@ define(["common"],
 
             set(config);
 
+            this.getLinkGridArray = function(){
+
+                var i, j,
+                    sNode, tNode,
+                    lId, link, classOutArray,
+                    linkGridArray = [];
+
+                for(i = 0; i < nodes.length; i++){
+
+                    sNode = nodes[i];
+
+                    for(j = 0; j < nodes.length; i++){
+
+                        tNode = nodes[i];
+
+                        lId = 'l-' + sNode.id + "-" + tNode.id;
+                        link = linkMap[lId];
+
+                        if (!common.isUndefined(link)) {
+                        }
+                        else {
+
+                            classOutArray = [
+                                "link",
+                                "s-" + sNode.id,
+                                "t-" + tNode.id
+                            ];
+
+                            link = {
+                                id: lId,
+                                class: classOutArray.join(" "),
+                                source: sNode,
+                                target: tNode,
+                                weight: 0
+                            };
+                        }
+
+                        linkGridArray.push(link);
+                    }
+                }
+
+            };
+
             this.getNode = function(nodeId){
                 return nodeMap[nodeId];
             };
