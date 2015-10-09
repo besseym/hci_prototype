@@ -33,16 +33,14 @@ define(["common"],
 
                     sNode = nodes[i];
 
-                    for(j = 0; j < nodes.length; i++){
+                    for(j = 0; j < nodes.length; j++){
 
-                        tNode = nodes[i];
+                        tNode = nodes[j];
 
                         lId = 'l-' + sNode.id + "-" + tNode.id;
                         link = linkMap[lId];
 
-                        if (!common.isUndefined(link)) {
-                        }
-                        else {
+                        if (common.isUndefined(link)) {
 
                             classOutArray = [
                                 "link",
@@ -62,6 +60,8 @@ define(["common"],
                         linkGridArray.push(link);
                     }
                 }
+
+                return linkGridArray;
 
             };
 

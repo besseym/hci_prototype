@@ -9680,19 +9680,19 @@ circle.node {
 }
 
 .chart {
+  width: 100%;
   margin: 0;
   padding: 0;
   position: relative;
 }
-.chart.chart-graph {
+.chart svg {
+  display: inline-block;
   width: 100%;
-  height: 1000px;
-}
-.chart.chart-graph svg {
-  width: 100%;
-  height: 100%;
-  padding: 0;
   margin: 0;
+  padding: 0;
+}
+.chart.chart-graph {
+  height: 1000px;
 }
 .chart .chart-dialog {
   width: 500px;

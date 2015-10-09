@@ -423,246 +423,244 @@
 
             </div>
 
-            <div class="col-md-9">
+            <div id="content-main" class="col-md-9">
 
-                <div id="content-main" >
+                <i class="fa fa-spinner fa-pulse"></i>
 
-                    <div id="content-overview">
+                <div id="content-overview">
 
-                        <div class="jumbotron">
-                            <h1>Welcome</h1>
-                            <p>Begin the video connection process by performing a search.</p>
-                        </div>
-
-                        <h2>Distributed Videos per Outlet</h2>
-                        <img style="display: block; margin: 0 auto;" src="/hci_prototype/images/outlet_videos.png" />
-
+                    <div class="jumbotron">
+                        <h1>Welcome</h1>
+                        <p>Begin the video connection process by performing a search.</p>
                     </div>
 
-                    <div id="content-viz"style="display: none;">
+                    <h2>Distributed Videos per Outlet</h2>
+                    <img style="display: block; margin: 0 auto;" src="/hci_prototype/images/outlet_videos.png" />
 
-                        <div id="chart-graph-video" class="chart chart-graph">
-                            <svg ></svg>
+                </div>
 
-                            <div id="n-dialog" class="chart-dialog well">
-                                <h4 id="n-d-title">Video Title</h4>
-                                <div class="row">
+                <div id="content-viz" style="display: none;">
 
-                                    <div class="col-md-4">
-                                        <label>Id</label>
-                                        <p id="n-d-id">123456</p>
-                                    </div>
+                    <div id="chart-graph-video" class="chart chart-graph">
+                        <svg ></svg>
 
-                                    <div class="col-md-8">
-                                        <label>Type</label>
-                                        <p id="n-d-type">Trailer</p>
-                                    </div>
+                        <div id="n-dialog" class="chart-dialog well">
+                            <h4 id="n-d-title">Video Title</h4>
+                            <div class="row">
 
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-md-4">
-                                        <label>Series Id</label>
-                                        <p id="n-d-series-id"></p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Season #</label>
-                                        <p id="n-d-season-number"></p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label>Show Id</label>
-                                        <p id="n-d-show-id"></p>
-                                    </div>
-
+                                <div class="col-md-4">
+                                    <label>Id</label>
+                                    <p id="n-d-id">123456</p>
                                 </div>
 
-                                <p id="d-n-select">
-                                    <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
-                                </p>
-                                <p id="d-n-this-to-selected">
-                                    <a id="d-n-this-to-selected-btn" class="btn btn-default btn-block" href="#" role="button">Connect This Video to Selected</a>
-                                </p>
-                                <p id="d-n-selected-to-this">
-                                    <a id="d-n-selected-to-this-btn" class="btn btn-default btn-block" href="#" role="button">Connect Selected to This Video</a>
-                                </p>
+                                <div class="col-md-8">
+                                    <label>Type</label>
+                                    <p id="n-d-type">Trailer</p>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <label>Series Id</label>
+                                    <p id="n-d-series-id"></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Season #</label>
+                                    <p id="n-d-season-number"></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Show Id</label>
+                                    <p id="n-d-show-id"></p>
+                                </div>
+
                             </div>
 
-                            <div id="l-dialog" class="chart-dialog well">
-                                <p>
-                                    <h5 id="source"></h5>
-                                </p>
-                                <p>
-                                    <a id="l-btn" href="#" class="btn btn-default btn-lg">
-                                        <i class="fa fa-link"></i>
-                                    </a>
-                                </p>
-                                <p>
-                                    <h5 id="target"></h5>
-                                </p>
-                            </div>
+                            <p id="d-n-select">
+                                <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
+                            </p>
+                            <p id="d-n-this-to-selected">
+                                <a id="d-n-this-to-selected-btn" class="btn btn-default btn-block" href="#" role="button">Connect This Video to Selected</a>
+                            </p>
+                            <p id="d-n-selected-to-this">
+                                <a id="d-n-selected-to-this-btn" class="btn btn-default btn-block" href="#" role="button">Connect Selected to This Video</a>
+                            </p>
                         </div>
 
-                    </div>
-
-                    <div id="content-matrix" style="display: none;">
-
-                        <div id="chart-matrix-video" class="chart chart-matrix">
-                            <svg ></svg>
+                        <div id="l-dialog" class="chart-dialog well">
+                            <p>
+                                <h5 id="source"></h5>
+                            </p>
+                            <p>
+                                <a id="l-btn" href="#" class="btn btn-default btn-lg">
+                                    <i class="fa fa-link"></i>
+                                </a>
+                            </p>
+                            <p>
+                                <h5 id="target"></h5>
+                            </p>
                         </div>
-
                     </div>
 
-                    <div id="content-matrix-sample" style="display: none;">
+                </div>
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>
-                                        <div><span>A Prosthetic Eye for the Blind</span></div>
-                                    </th>
-                                    <th>
-                                        <div><span>Are Emotions Just Electrical Impulses?</span></div>
-                                    </th>
-                                    <th>
-                                        <div><span>Bringing the Incredible Bionic Man to Life</span></div>
-                                    </th>
-                                    <th>
-                                        <div><span>Giving a Face to the Incredible Bionic Man</span></div>
-                                    </th>
-                                    <th>
-                                        <div><span>The Incredible Bionic Man: Sneak Peek</span></div>
-                                    </th>
+                <div id="content-matrix" style="display: none;">
 
-                                    <th>
-                                        <div><span>One Small Step for the Bionic Man, One Giant Leap for Robotics</span></div>
-                                    </th>
-                                    <th>
-                                        <div><span>Professor Uses Artificial Organs to Make a Working Circulatory System</span></div>
-                                    </th>
-                                    <th>
-                                        <div><span>Surgeon Rewires Amputees' Nerves</span></div>
-                                    </th>
-
-                                    <th>
-                                        <div><span>This Robot Can Pour You a Drink</span></div>
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="t-dmc">
-                                    <td>A Prosthetic Eye for the Blind</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-eps">
-                                    <td>Are Emotions Just Electrical Impulses?</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-dmc">
-                                    <td>Bringing the Incredible Bionic Man to Life</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-eps">
-                                    <td>Giving a Face to the Incredible Bionic Man</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-snk">
-                                    <td>The Incredible Bionic Man: Sneak Peek</td>
-                                    <td><div class="m-link m-link-1"><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div class="m-link m-link-2"><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-eps">
-                                    <td>One Small Step for the Bionic Man, One Giant Leap for Robotics</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-eps">
-                                    <td>Professor Uses Artificial Organs to Make a Working Circulatory System</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-dmc">
-                                    <td>Surgeon Rewires Amputees' Nerves</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                                <tr class="t-eps">
-                                    <td>This Robot Can Pour You a Drink</td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                    <td><div><span>&nbsp;</span></div></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                    <div id="chart-matrix-video" class="chart chart-matrix">
+                        <svg></svg>
                     </div>
+
+                </div>
+
+                <div id="content-matrix-sample" style="display: none;">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <div><span>A Prosthetic Eye for the Blind</span></div>
+                                </th>
+                                <th>
+                                    <div><span>Are Emotions Just Electrical Impulses?</span></div>
+                                </th>
+                                <th>
+                                    <div><span>Bringing the Incredible Bionic Man to Life</span></div>
+                                </th>
+                                <th>
+                                    <div><span>Giving a Face to the Incredible Bionic Man</span></div>
+                                </th>
+                                <th>
+                                    <div><span>The Incredible Bionic Man: Sneak Peek</span></div>
+                                </th>
+
+                                <th>
+                                    <div><span>One Small Step for the Bionic Man, One Giant Leap for Robotics</span></div>
+                                </th>
+                                <th>
+                                    <div><span>Professor Uses Artificial Organs to Make a Working Circulatory System</span></div>
+                                </th>
+                                <th>
+                                    <div><span>Surgeon Rewires Amputees' Nerves</span></div>
+                                </th>
+
+                                <th>
+                                    <div><span>This Robot Can Pour You a Drink</span></div>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="t-dmc">
+                                <td>A Prosthetic Eye for the Blind</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-eps">
+                                <td>Are Emotions Just Electrical Impulses?</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-dmc">
+                                <td>Bringing the Incredible Bionic Man to Life</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-eps">
+                                <td>Giving a Face to the Incredible Bionic Man</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-snk">
+                                <td>The Incredible Bionic Man: Sneak Peek</td>
+                                <td><div class="m-link m-link-1"><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div class="m-link m-link-2"><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-eps">
+                                <td>One Small Step for the Bionic Man, One Giant Leap for Robotics</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-eps">
+                                <td>Professor Uses Artificial Organs to Make a Working Circulatory System</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-dmc">
+                                <td>Surgeon Rewires Amputees' Nerves</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                            <tr class="t-eps">
+                                <td>This Robot Can Pour You a Drink</td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                                <td><div><span>&nbsp;</span></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
 

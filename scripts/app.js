@@ -158,6 +158,10 @@ require(
                         nodeLinkChart.clear();
                     }
 
+                    if(!common.isUndefined(adjMatrixChart)){
+                        adjMatrixChart.clear();
+                    }
+
                     dataNodeLink = DataNodeLink.getInstance(data);
 
                     //nodeLinkChart = ChartNodeLink.getInstance({
@@ -177,15 +181,20 @@ require(
                     //    hideLinkDialog: hideLinkDialog
                     //});
 
-                    adjMatrixChart = ChartAdjMatrix.getInstance({
-                        selector: "#chart-matrix-video",
-                        data: dataNodeLink
-                    });
-                    adjMatrixChart.display();
-
                     focusHighlightTab();
                     //focusVizContent();
                     focusMatrixContent();
+
+                    adjMatrixChart = ChartAdjMatrix.getInstance({
+                        selector: "#chart-matrix-video",
+                        data: dataNodeLink,
+                        padding: {
+                            top: 250, right: 0, bottom: 0, left: 250
+                        }
+                    });
+
+                    adjMatrixChart.display();
+
                 });
             }
             else {
