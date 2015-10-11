@@ -190,6 +190,10 @@ require(
             event.preventDefault();
         });
 
+        $("#form-hightlight").submit(function( event ) {
+            event.preventDefault();
+        });
+
         function loadNodeLinkChart(){
 
             nodeLinkChart = ChartNodeLink.getInstance({
