@@ -15,6 +15,8 @@ require(
             p,
             parameterMap = common.getParameterMap(),
 
+            activeChart = "matrix",
+
             dataNodeLink,
             nodeLinkChart,
             adjMatrixChart,
@@ -42,6 +44,9 @@ require(
 
             linkDialog = $("#l-dialog"),
             linkDialogBtn = linkDialog.find("#l-btn"),
+
+            highlightTabPane = $("#tab-pane-highlight"),
+            resultCount = highlightTabPane.find("#result-count"),
 
             selectTabPane = $("#tab-pane-select"),
             connectionTableBody = selectTabPane.find("#s-n-c-tbl tbody");
@@ -164,36 +169,17 @@ require(
 
                     dataNodeLink = DataNodeLink.getInstance(data);
 
-                    //nodeLinkChart = ChartNodeLink.getInstance({
-                    //
-                    //    selector: "#chart-graph-video",
-                    //    data: dataNodeLink,
-                    //
-                    //    focusSelectTab: focusSelectTab,
-                    //    buildSelectPanel: buildSelectPanel,
-                    //
-                    //    populateNodeDialog: populateNodeDialog,
-                    //    setNodeDialogLocation: setNodeDialogLocation,
-                    //    hideNodeDialog: hideNodeDialog,
-                    //
-                    //    populateLinkDialog: populateLinkDialog,
-                    //    setLinkDialogLocation: setLinkDialogLocation,
-                    //    hideLinkDialog: hideLinkDialog
-                    //});
-
+                    resultCount.text(dataNodeLink.getNodeCount());
                     focusHighlightTab();
-                    //focusVizContent();
-                    focusMatrixContent();
 
-                    adjMatrixChart = ChartAdjMatrix.getInstance({
-                        selector: "#chart-matrix-video",
-                        data: dataNodeLink,
-                        padding: {
-                            top: 250, right: 0, bottom: 0, left: 250
-                        }
-                    });
+                    if("nodeLink" === activeChart){
+                        focusVizContent();
+                    }
+                    else if("matrix" === activeChart){
+                        focusMatrixContent();
+                    }
 
-                    adjMatrixChart.display();
+                    loadAdjMatrixChart();
 
                 });
             }
@@ -204,21 +190,95 @@ require(
             event.preventDefault();
         });
 
+        function loadNodeLinkChart(){
+
+            nodeLinkChart = ChartNodeLink.getInstance({
+
+                selector: "#chart-graph-video",
+                data: dataNodeLink,
+
+                focusSelectTab: focusSelectTab,
+                buildSelectPanel: buildSelectPanel,
+
+                populateNodeDialog: populateNodeDialog,
+                setNodeDialogLocation: setNodeDialogLocation,
+                hideNodeDialog: hideNodeDialog,
+
+                populateLinkDialog: populateLinkDialog,
+                setLinkDialogLocation: setLinkDialogLocation,
+                hideLinkDialog: hideLinkDialog
+            });
+
+            nodeLinkChart.display();
+        }
+
+        function loadAdjMatrixChart(){
+
+            adjMatrixChart = ChartAdjMatrix.getInstance({
+                selector: "#chart-matrix-video",
+                data: dataNodeLink,
+                padding: {
+                    top: 250, right: 0, bottom: 0, left: 250
+                },
+
+                app: {
+                    getSelectedNodeId: function(){
+                        return selectedNodeId;
+                    },
+                    selectNode: selectNode,
+                    changeSelectedLinkColor: changeSelectedLinkColor,
+                    showDangerMsg: showDangerMsg
+                }
+            });
+
+            adjMatrixChart.display();
+        }
+
         $( "#form-hightlight input[name=highlight]:radio" ).change(function(event) {
 
             var value = $(this).val(),
+                typeColorArray;
+
+            if("nodeLink" === activeChart) {
                 typeColorArray = nodeLinkChart.highlight(value);
+            }
+            else if("matrix" === activeChart){
+                typeColorArray = adjMatrixChart.highlight(value);
+            }
 
             buildColorKey(typeColorArray);
         });
+
+        $( "#form-hightlight input[name=input-filter-name]" ).on('input', function(event) {
+
+            var value = $(this).val();
+
+            if("nodeLink" === activeChart) {
+                nodeLinkChart.filterNode(value);
+            }
+            else if("matrix" === activeChart){
+                adjMatrixChart.filterNode(value);
+            }
+
+        });
+
+        function selectNode(sNodeId){
+
+            if(dataNodeLink.hasNode(sNodeId)) {
+
+                buildSelectPanel(dataNodeLink.getNode(sNodeId), dataNodeLink.getNodeConnect(sNodeId));
+                focusSelectTab();
+
+                selectedNodeId = sNodeId;
+            }
+        }
 
         //node dialog actions
         nodeDialogSelectBtn.on('click', function( event ) {
 
             selectedNodeId = nodeDialog.find("#n-d-id").text();
 
-            buildSelectPanel(dataNodeLink.getNode(selectedNodeId), dataNodeLink.getNodeConnect(selectedNodeId));
-            focusSelectTab();
+            selectNode(selectedNodeId);
 
             nodeLinkChart.focusOnNode(selectedNodeId);
 
@@ -358,10 +418,27 @@ require(
             linkDialog.css("visibility", "hidden");
         }
 
+        function changeSelectedLinkColor(lId, doHighlight){
+
+            var lRow = connectionTableBody.find("#s-" + lId);
+
+            if (lRow.length > 0 ){
+
+                if(doHighlight){
+                    lRow.addClass("bg-primary");
+                }
+                else {
+                    lRow.removeClass("bg-primary");
+                }
+            }
+        }
+
         function buildSelectPanel(d, connect){
 
             var j,
+                sortStartIndex,
                 connection,
+                connectionLinkArray,
                 connectionBtnArray,
                 connectOutArray = [];
 
@@ -386,7 +463,7 @@ require(
                     connection = connect.connectionArray[j];
 
                     connectOutArray = [
-                        "<tr id='s-" + connection.l.id + "'>",
+                        "<tr id='s-" + connection.l.id + "' data-link-id='" + connection.l.id + "' data-source-id='" + connection.l.source.id + "' class='s-l'>",
                         "<td>",
                         "<i class='fa fa-bars'></i>",
                         "</td>",
@@ -404,13 +481,64 @@ require(
                         "<i class='fa fa-link'></i>",
                         "</a>",
                         "</td>",
-                        "<tr>"
+                        "</tr>"
                     ];
 
                     connectionTableBody.append(connectOutArray.join(""));
-
                 }
             }
+
+            connectionTableBody.sortable({
+                cursor: "move",
+                opacity: 0.5,
+                start: function( event, ui ) {
+
+                    sortStartIndex = ui.item.index();
+                },
+                update: function( event, ui ) {
+
+                    var sortEndIndex = ui.item.index(),
+                        sNodeId = ui.item.data('source-id');
+
+                    if("nodeLink" === activeChart) {
+                        nodeLinkChart.breakLink(id);
+                    }
+                    else if("matrix" === activeChart){
+                        adjMatrixChart.adjustLinkWeight(sNodeId, sortStartIndex, sortEndIndex);
+                    }
+
+                }
+            });
+
+            connectionLinkArray = connectionTableBody.find('.s-l');
+            connectionLinkArray.on("mouseover", function() {
+
+                var lId = $(this).data('link-id');
+
+                changeSelectedLinkColor(lId, true);
+
+                if("nodeLink" === activeChart) {
+                    nodeLinkChart.changeLinkColor(lId, true);
+                }
+                else if("matrix" === activeChart){
+                    adjMatrixChart.changeLinkColor(lId, true);
+                }
+
+            });
+
+            connectionLinkArray.on("mouseout", function() {
+
+                var lId = $(this).data('link-id');
+
+                changeSelectedLinkColor(lId, false);
+
+                if("nodeLink" === activeChart) {
+                    nodeLinkChart.changeLinkColor(lId, false);
+                }
+                else if("matrix" === activeChart){
+                    adjMatrixChart.changeLinkColor(lId, false);
+                }
+            });
 
             connectionBtnArray = connectionTableBody.find('.s-l-btn');
             connectionBtnArray.on("mouseover", function() {
@@ -426,7 +554,13 @@ require(
             connectionBtnArray.on("click", function(event){
 
                 var id = $(this).attr('href');
-                nodeLinkChart.breakLink(id);
+
+                if("nodeLink" === activeChart) {
+                    nodeLinkChart.breakLink(id);
+                }
+                else if("matrix" === activeChart){
+                    adjMatrixChart.breakLink(id);
+                }
 
                 connectionTableBody.find("#s-" + id).remove();
 

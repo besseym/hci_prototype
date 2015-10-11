@@ -5,7 +5,9 @@ define(["common"],
         //start
         var DataNodeLink = function (config) {
 
-            var nodes = [],
+            var LINK_MAX = 7,
+
+                nodes = [],
                 nodeMap = [],
                 nodeConnectMap = [],
                 links = [],
@@ -21,6 +23,10 @@ define(["common"],
                 urlBase = "http://www.smithsonianchannel.com/videos/video";
 
             set(config);
+
+            this.getNodeCount = function(){
+                return nodes.length;
+            };
 
             this.getLinkGridArray = function(){
 
@@ -65,6 +71,10 @@ define(["common"],
 
             };
 
+            this.hasNode = function(nodeId){
+                return !common.isUndefined(nodeMap[nodeId]);
+            };
+
             this.getNode = function(nodeId){
                 return nodeMap[nodeId];
             };
@@ -97,6 +107,7 @@ define(["common"],
                 node = {
                     id: id,
                     title: n.title,
+                    titleFilter: n.title.toLowerCase(),
                     type: n.type,
                     rating: n.rating,
                     duration: n.duration,
@@ -138,7 +149,7 @@ define(["common"],
 
                     matchAttrMap[mId] = {
                         id: mId,
-                        name: ((n.isMatch) ? "matched search" : "no search match")
+                        name: ((n.isMatch) ? "matched search" : "did NOT match search")
                     };
                 }
 
@@ -195,6 +206,10 @@ define(["common"],
                     if (index >= 0) {
                         cNode.connectionArray.splice(index, 1);
                     }
+
+                    for (i = index; i < cNode.connectionArray.length; i++) {
+                        cNode.connectionArray[i].l.weight = cNode.connectionArray[i].l.weight - 1;
+                    }
                 }
 
                 linkMap[lId] = undefined;
@@ -204,6 +219,18 @@ define(["common"],
 
             this.removeLink = function(lId){
                 return removeLink(lId);
+            };
+
+            this.adjustLinkWeight = function(sNodeId, startIndex, endIndex){
+
+                var i, cNode = nodeConnectMap[sNodeId], connect = cNode.connectionArray[startIndex];
+
+                cNode.connectionArray.splice(startIndex, 1);
+                cNode.connectionArray.splice(endIndex, 0, connect);
+
+                for (i = 0; i < cNode.connectionArray.length; i++) {
+                    cNode.connectionArray[i].l.weight = i + 1;
+                }
             };
 
             function makeLink(sNode, tNode, weight){
@@ -249,30 +276,46 @@ define(["common"],
                 return link;
             }
 
-            this.isConnected = function(sourceId, targetId){
+            function getMaxWeight(sourceId){
 
-                var isConnected = false,
-                    cNode = nodeConnectMap[sourceId],
-                    connect;
+                var i, w = 1, cNode,
+                    connect = nodeConnectMap[sourceId];
 
-                if(!common.isUndefined(cNode)){
+                if(!common.isUndefined(connect)){
 
-                    for(i = 0; i < cNode.connectionArray.length; i++){
+                    for(i = 0; i < connect.connectionArray.length; i++){
 
-                        connect = cNode.connectionArray[i];
-                        if(connect.n.id === targetId){
-                            isConnected = true;
-                            break;
+                        cNode = connect.connectionArray[i];
+                        if(cNode.l.weight > w){
+                            w = cNode.l.weight;
                         }
                     }
                 }
 
-                return isConnected;
+                return w;
+            }
+
+            this.hasMaxLinks = function(sourceId){
+
+                var len = 0, connect = nodeConnectMap[sourceId];
+                if(!common.isUndefined(connect)){
+                    len = connect.connectionArray.length;
+                }
+
+                return (len >= LINK_MAX);
+            };
+
+            this.isConnected = function(sourceId, targetId){
+
+                var id = 'l-' + sourceId + "-" + targetId;
+                return !common.isUndefined(linkMap[id]);
             };
 
             this.makeLink = function(sourceId, targetId){
 
-                return makeLink(nodeMap[sourceId], nodeMap[targetId], 6);
+                var maxWeight = getMaxWeight(sourceId);
+
+                return makeLink(nodeMap[sourceId], nodeMap[targetId], maxWeight + 1);
             };
 
             function addLink(l){
@@ -316,8 +359,16 @@ define(["common"],
                     value = nodes;
                 }
 
+                if(key === "nodeMap") {
+                    value = nodeMap;
+                }
+
                 if(key === "links") {
                     value = links;
+                }
+
+                if(key === "linkMap") {
+                    value = linkMap;
                 }
 
                 if(key === "typeAttrMap") {
