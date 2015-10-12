@@ -9664,23 +9664,15 @@ button.close {
   content: "";
 }
 
-.link {
-  stroke: #aaa;
-}
-
-.node text {
-  stroke: #333;
-  cursos: pointer;
-}
-
-circle.node {
-  stroke: #fff;
-  stroke-width: 3px;
-  fill: #555;
-}
-
 #tab-content-dialog #tab-pane-select #s-n-c-tbl tbody tr {
   cursor: pointer;
+}
+
+#content-viz #wait-feedback {
+  font-size: 30px;
+}
+#content-viz #tab-content-viz {
+  padding: 2em 0 0 0;
 }
 
 .chart {
@@ -9697,6 +9689,24 @@ circle.node {
 }
 .chart.chart-graph {
   height: 1000px;
+}
+.chart.chart-graph line.link {
+  stroke: #aaa;
+}
+.chart.chart-graph line.link.highlight {
+  stroke: #337ab7;
+}
+.chart.chart-graph .arrow {
+  fill: #aaa;
+}
+.chart.chart-graph circle.node {
+  stroke: #fff;
+  stroke-width: 3px;
+  fill: #555;
+}
+.chart.chart-graph circle.node.text {
+  stroke: #333;
+  cursos: pointer;
 }
 .chart.chart-matrix g.s-labels text.node {
   cursor: pointer;

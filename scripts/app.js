@@ -21,6 +21,8 @@ require(
             nodeLinkChart,
             adjMatrixChart,
 
+            waitFeedback = $("#wait-feedback"),
+
             flashSuccess = $("#flash-success"),
             flashSuccessCloseBtn = flashSuccess.find("#btn-close-success"),
             flashSuccessMsg = flashSuccess.find("#flash-success-msg"),
@@ -74,6 +76,8 @@ require(
             var isMatch = false,
                 graph,
                 formArray = $( this ).serializeArray();
+
+            waitFeedback.show();
 
             jQuery.each( formArray, function( i, field ) {
 
@@ -172,18 +176,32 @@ require(
                     resultCount.text(dataNodeLink.getNodeCount());
                     focusHighlightTab();
 
-                    if("nodeLink" === activeChart){
-                        focusVizContent();
-                    }
-                    else if("matrix" === activeChart){
-                        focusMatrixContent();
-                    }
+                    //if("nodeLink" === activeChart){
+                    //    focusVizContent();
+                    //
+                    //}
+                    //else if("matrix" === activeChart){
+                    //    focusMatrixContent();
+                    //
+                    //}
 
+                    loadNodeLinkChart();
                     loadAdjMatrixChart();
 
+                    if("nodeLink" === activeChart) {
+                        nodeLinkChart.display();
+                    }
+                    else if("matrix" === activeChart){
+                        adjMatrixChart.display();
+                    }
+
+                    waitFeedback.hide();
                 });
             }
             else {
+
+                waitFeedback.hide();
+
                 showWarningMsg("The search criteria you provided returned too many search results. Please refine your search.");
             }
 
@@ -194,6 +212,16 @@ require(
             event.preventDefault();
         });
 
+        $("a[href='#tab-pane-node-link']").on("shown.bs.tab", function( event ) {
+            activeChart = "nodeLink";
+            nodeLinkChart.display();
+        });
+
+        $("a[href='#tab-pane-matrix']").on("shown.bs.tab", function( event ) {
+            activeChart = "matrix";
+            adjMatrixChart.display();
+        });
+
         function loadNodeLinkChart(){
 
             nodeLinkChart = ChartNodeLink.getInstance({
@@ -201,19 +229,22 @@ require(
                 selector: "#chart-graph-video",
                 data: dataNodeLink,
 
-                focusSelectTab: focusSelectTab,
-                buildSelectPanel: buildSelectPanel,
+                app: {
 
-                populateNodeDialog: populateNodeDialog,
-                setNodeDialogLocation: setNodeDialogLocation,
-                hideNodeDialog: hideNodeDialog,
+                    selectNode: selectNode,
 
-                populateLinkDialog: populateLinkDialog,
-                setLinkDialogLocation: setLinkDialogLocation,
-                hideLinkDialog: hideLinkDialog
+                    focusSelectTab: focusSelectTab,
+                    buildSelectPanel: buildSelectPanel,
+
+                    populateNodeDialog: populateNodeDialog,
+                    setNodeDialogLocation: setNodeDialogLocation,
+                    hideNodeDialog: hideNodeDialog,
+
+                    populateLinkDialog: populateLinkDialog,
+                    setLinkDialogLocation: setLinkDialogLocation,
+                    hideLinkDialog: hideLinkDialog
+                }
             });
-
-            nodeLinkChart.display();
         }
 
         function loadAdjMatrixChart(){
@@ -234,8 +265,6 @@ require(
                     showDangerMsg: showDangerMsg
                 }
             });
-
-            adjMatrixChart.display();
         }
 
         $( "#form-hightlight input[name=highlight]:radio" ).change(function(event) {
@@ -505,7 +534,7 @@ require(
                         sNodeId = ui.item.data('source-id');
 
                     if("nodeLink" === activeChart) {
-                        nodeLinkChart.breakLink(id);
+                        nodeLinkChart.adjustLinkWeight(sNodeId, sortStartIndex, sortEndIndex);
                     }
                     else if("matrix" === activeChart){
                         adjMatrixChart.adjustLinkWeight(sNodeId, sortStartIndex, sortEndIndex);

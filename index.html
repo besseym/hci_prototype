@@ -106,7 +106,7 @@
 
                                     <div class="form-group">
                                         <label for="keywords">Keywords <small>(common separated)</small></label>
-                                        <input type="text" class="form-control" id="keywords" name="keywords" value="robots" placeholder="Keywords">
+                                        <input type="text" class="form-control" id="keywords" name="keywords" value="bionic" placeholder="Keywords">
                                     </div>
 
                                 </div>
@@ -435,10 +435,6 @@
 
             <div id="content-main" class="col-md-9">
 
-                <!--
-                <i class="fa fa-spinner fa-pulse"></i>
-                -->
-
                 <div id="content-overview">
 
                     <div class="jumbotron">
@@ -453,73 +449,101 @@
 
                 <div id="content-viz" style="display: none;">
 
-                    <div id="chart-graph-video" class="chart chart-graph">
-                        <svg ></svg>
+                    <div id="wait-feedback" style="display: none"><i class="fa fa-spinner fa-pulse"></i></div>
 
-                        <div id="n-dialog" class="chart-dialog well">
-                            <h4 id="n-d-title">Video Title</h4>
-                            <div class="row">
+                    <ul id="tabs-viz" class="nav nav-tabs nav-justified" role="tablist">
+                        <li id="nav-tab-matrix" role="presentation" class="active">
+                            <a href="#tab-pane-matrix" data-toggle="tab">Matrix</a>
+                        </li>
+                        <li id="nav-node-link" role="presentation">
+                            <a href="#tab-pane-node-link" data-toggle="tab">Node Link</a>
+                        </li>
+                    </ul>
 
-                                <div class="col-md-4">
-                                    <label>Id</label>
-                                    <p id="n-d-id">123456</p>
-                                </div>
+                    <div id="tab-content-viz" class="tab-content">
 
-                                <div class="col-md-8">
-                                    <label>Type</label>
-                                    <p id="n-d-type">Trailer</p>
-                                </div>
+                        <div id="tab-pane-matrix" role="tabpanel" class="tab-pane active">
 
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-4">
-                                    <label>Series Id</label>
-                                    <p id="n-d-series-id"></p>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Season #</label>
-                                    <p id="n-d-season-number"></p>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Show Id</label>
-                                    <p id="n-d-show-id"></p>
-                                </div>
-
+                            <div id="chart-matrix-video" class="chart chart-matrix">
+                                <svg></svg>
                             </div>
 
-                            <p id="d-n-select">
-                                <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
-                            </p>
-                            <p id="d-n-this-to-selected">
-                                <a id="d-n-this-to-selected-btn" class="btn btn-default btn-block" href="#" role="button">Connect This Video to Selected</a>
-                            </p>
-                            <p id="d-n-selected-to-this">
-                                <a id="d-n-selected-to-this-btn" class="btn btn-default btn-block" href="#" role="button">Connect Selected to This Video</a>
-                            </p>
                         </div>
 
-                        <div id="l-dialog" class="chart-dialog well">
-                            <p>
-                                <h5 id="source"></h5>
-                            </p>
-                            <p>
-                                <a id="l-btn" href="#" class="btn btn-default btn-lg">
-                                    <i class="fa fa-link"></i>
-                                </a>
-                            </p>
-                            <p>
-                                <h5 id="target"></h5>
-                            </p>
+                        <div id="tab-pane-node-link" role="tabpanel" class="tab-pane">
+
+                            <div id="chart-graph-video" class="chart chart-graph">
+                                <svg >
+
+                                    <defs>
+                                        <marker id="arrow" viewBox="0 -5 10 10" markerWidth="16" markerHeight="16" refx="20" refy="0" orient="auto" markerUnits="userSpaceOnUse">
+                                            <path d="M 0,-5 L 10,0 L0,5" class="arrow" />
+                                        </marker>
+                                    </defs>
+
+
+                                </svg>
+
+                                <div id="n-dialog" class="chart-dialog well">
+                                    <h4 id="n-d-title">Video Title</h4>
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <label>Id</label>
+                                            <p id="n-d-id">123456</p>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <label>Type</label>
+                                            <p id="n-d-type">Trailer</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <label>Series Id</label>
+                                            <p id="n-d-series-id"></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Season #</label>
+                                            <p id="n-d-season-number"></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Show Id</label>
+                                            <p id="n-d-show-id"></p>
+                                        </div>
+
+                                    </div>
+
+                                    <p id="d-n-select">
+                                        <a id="d-n-select-btn" class="btn btn-default btn-block btn-primary" href="#" role="button">Select</a>
+                                    </p>
+                                    <p id="d-n-this-to-selected">
+                                        <a id="d-n-this-to-selected-btn" class="btn btn-default btn-block" href="#" role="button">Connect This Video to Selected</a>
+                                    </p>
+                                    <p id="d-n-selected-to-this">
+                                        <a id="d-n-selected-to-this-btn" class="btn btn-default btn-block" href="#" role="button">Connect Selected to This Video</a>
+                                    </p>
+                                </div>
+
+                                <div id="l-dialog" class="chart-dialog well">
+                                    <p>
+                                        <h5 id="source"></h5>
+                                    </p>
+                                    <p>
+                                        <a id="l-btn" href="#" class="btn btn-default btn-lg">
+                                            <i class="fa fa-link"></i>
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <h5 id="target"></h5>
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
 
-                </div>
-
-                <div id="content-matrix" style="display: none;">
-
-                    <div id="chart-matrix-video" class="chart chart-matrix">
-                        <svg></svg>
                     </div>
 
                 </div>

@@ -28,17 +28,24 @@ define(["common", "chart/Chart"], function (common, Chart) {
             frame = d3.select(parent.get('selector'));
             exists = !frame.empty();
 
-            if(exists) {
+            parent.set({exists: exists});
+
+            //updateSvg();
+
+        }());
+
+        function updateSvg(){
+
+            if(parent.exists()) {
 
                 svg = frame.select("svg");
                 width = parseInt(svg.style("width"), 10);
                 svg.attr('height', width);
                 height = width;
 
-                parent.set({exists: exists, width: width, height: height});
+                parent.set({width: width, height: height});
             }
-
-        }());
+        }
 
         function updateScale(dSet){
 
@@ -82,9 +89,11 @@ define(["common", "chart/Chart"], function (common, Chart) {
             var data = parent.get('data'),
                 nodeArray = data.get('nodes'),
                 linkGridArray = data.getLinkGridArray(),
-                sLabelsGroup = svg.select("g.s-labels"),
-                tLabelsGroup = svg.select("g.t-labels"),
-                linksGroup = svg.select("g.links");
+                sLabelsGroup, tLabelsGroup, linksGroup;
+
+            sLabelsGroup = svg.select("g.s-labels");
+            tLabelsGroup = svg.select("g.t-labels");
+            linksGroup = svg.select("g.links");
 
             if(sLabelsGroup.empty()){
                 sLabelsGroup = svg.append("g").attr("class", "s-labels");
@@ -296,6 +305,7 @@ define(["common", "chart/Chart"], function (common, Chart) {
 
         this.display = function(){
 
+            updateSvg();
             updateScale();
             display();
         };

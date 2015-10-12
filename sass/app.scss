@@ -4,22 +4,6 @@
 $fa-font-path: '/hci_prototype/fonts';
 @import '../bower_components/fontawesome/scss/font-awesome';
 
-
-.link {
-  stroke: #aaa;
-}
-
-.node text {
-  stroke:#333;
-  cursos:pointer;
-}
-
-circle.node {
-  stroke:#fff;
-  stroke-width:3px;
-  fill:#555;
-}
-
 #tab-content-dialog {
 
   #tab-pane-select {
@@ -37,6 +21,18 @@ circle.node {
   }
 }
 
+#content-viz {
+
+  #wait-feedback{
+    font-size: 30px;
+  }
+
+  #tab-content-viz {
+    padding: 2em 0 0 0;
+  }
+}
+
+
 .chart {
 
   width: 100%;
@@ -52,6 +48,30 @@ circle.node {
 
   &.chart-graph {
     height: 1000px;
+
+    line.link {
+      stroke: #aaa;
+
+      &.highlight {
+        stroke: #337ab7;
+      }
+    }
+
+    .arrow {
+      fill: #aaa;
+    }
+
+    circle.node {
+
+      stroke:#fff;
+      stroke-width:3px;
+      fill:#555;
+
+      &.text {
+        stroke:#333;
+        cursos:pointer;
+      }
+    }
   }
 
   &.chart-matrix {

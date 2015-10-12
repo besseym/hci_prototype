@@ -8,8 +8,6 @@ define(["common"], function (common) {
             width,
             height,
             svg,
-            node,
-            link,
             data,
             typeColorScale = d3.scale.category20(),
             ratingColorScale = d3.scale.category20(),
@@ -79,10 +77,9 @@ define(["common"], function (common) {
 
         this.clear = function(){
 
-            svg.selectAll("*").remove();
+            svg.selectAll("g.links").remove();
+            svg.selectAll("g.nodes").remove();
         };
-
-
 
         function focusOnNode(nId){
 
@@ -90,6 +87,8 @@ define(["common"], function (common) {
 
             svg.selectAll('line:not(.s-' + nId + ')').transition().style({'opacity': 0.1, 'pointer-events': 'none'});
             svg.selectAll('circle:not(.g-' + nId + ')').transition().style({'opacity': 0.1});
+
+            config.app.selectNode(nId);
         }
 
         this.focusOnNode = function(nId){
@@ -105,7 +104,7 @@ define(["common"], function (common) {
 
             display();
 
-            resetVisuals();
+            focusOnNode(sourceId);
         };
 
         this.breakLink = function(lId){
@@ -116,23 +115,11 @@ define(["common"], function (common) {
 
             svg.select('#' + l.target.id).classed('g-' + l.source.id, false);
 
-            //links = data.get('links');
+            display();
 
-            //force.nodes(data.get('nodes')).links(links).start();
-            //force.start();
-
-            removeLinks();
-
-            //resetVisuals();
+            focusOnNode(l.source.id);
 
         };
-
-        function removeLinks(){
-
-            link.data(force.links(), function(d) { return d.id; })
-                .exit()
-                .remove();
-        }
 
         function updateDisplay(){
 
@@ -156,16 +143,31 @@ define(["common"], function (common) {
 
         function display(){
 
+            var linksGroup = svg.select("g.links"),
+                nodesGroup = svg.select("g.nodes");
+
+            if(linksGroup.empty()){
+                linksGroup = svg.append("g").attr("class", "links");
+            }
+
+            if(nodesGroup.empty()){
+                nodesGroup = svg.append("g").attr("class", "nodes");
+            }
+
             force.nodes(data.get('nodes')).links(data.get('links')).start();
 
-            link = svg.selectAll(".link")
+            linksGroup
+                .selectAll("line")
                 .data(force.links(), function(d) { return d.id; })
                 .enter().append("line")
                 .attr("id", function(d, i){
-                    return "l-" + d.id;
+                    return d.id;
                 })
-                .attr("class", function(d, i){
-                    return d.class;
+                .attr({
+                    "class": function(d, i){
+                        return d.class;
+                    },
+                    "marker-end": "url(#arrow)"
                 })
                 .style("stroke-width", function (d) {
                     return d.weight;
@@ -174,64 +176,82 @@ define(["common"], function (common) {
 
                     var mouse;
 
-                    //if(!d3.event.shiftKey){
-                    //    return;
-                    //}
+                    if(!d3.event.shiftKey){
+                        return;
+                    }
 
-                    config.hideNodeDialog();
+                    config.app.hideNodeDialog();
 
                     mouse = d3.mouse(this);
 
-                    config.populateLinkDialog(d);
+                    config.app.populateLinkDialog(d);
 
-                    config.setLinkDialogLocation({
+                    config.app.setLinkDialogLocation({
                         left: mouse[0] + "px",
                         top: mouse[1] + "px"
                     });
                 });
 
-            node = svg.selectAll(".node")
+            linksGroup
+                .selectAll("line")
+                .data(force.links(), function(d) { return d.id; })
+                .style("stroke-width", function (d) {
+                    return d.weight;
+                });
+
+            linksGroup
+                .selectAll("line")
+                .data(force.links(), function(d) { return d.id; })
+                .exit()
+                .remove();
+
+            nodesGroup
+                .selectAll("circle")
                 .data(force.nodes(), function(d) { return d.id; })
                 .enter().append("circle")
                 .attr("id", function(d, i){
                     return d.id;
                 })
-                .attr("class", function(d, i){
-                    return d.class;
-                })
-                .attr("r", function(d, i){
+                .attr({
+                    "class": function (d, i) {
+                        return d.class;
+                    },
+                    "r": function(d, i){
 
-                    var weight = 1;
-                    if(d.duration > 0){
-                        weight = d.duration;
+                        var weight = 1;
+                        if(d.duration > 0){
+                            weight = d.duration;
+                        }
+
+                        return Math.log(parseInt(weight)* 100);
+                    },
+                    "data-title": function (d, i) {
+                        return d.titleFilter;
+                    },
+                    "data-group": function(d, i){
+                        return d.group;
                     }
-
-                    return Math.log(parseInt(weight)* 100);
-                })
-                .attr("data-group", function(d, i){
-                    return d.group;
                 })
                 .on('mouseover', function(d, i){
 
                     var circle;
 
-                    //if(!d3.event.shiftKey){
-                    //    return;
-                    //}
+                    if(!d3.event.shiftKey){
+                        return;
+                    }
 
-                    config.hideLinkDialog();
+                    config.app.hideLinkDialog();
 
                     circle = d3.select(this);
 
-                    config.setNodeDialogLocation({
+                    config.app.setNodeDialogLocation({
                         left: circle.attr("cx") + "px",
                         top: circle.attr("cy") + "px"
                     });
 
-                    config.populateNodeDialog(d);
-                });
-
-            node.append("title")
+                    config.app.populateNodeDialog(d);
+                })
+                .append("title")
                 .text(function (d) {
                     return d.title;
                 });
@@ -245,9 +265,54 @@ define(["common"], function (common) {
             svg.selectAll('circle').style({'opacity': 1.0});
         }
 
+        function updateSvg(){
+
+            if(exists) {
+
+                svg = frame.select("svg");
+                width = parseInt(svg.style("width"), 10);
+                svg.attr('height', width);
+                height = width;
+
+                force.size([width, height]);
+            }
+        }
+
         this.display = function(){
 
+            updateSvg();
             display();
+        };
+
+        this.adjustLinkWeight = function(sNodeId, startIndex, endIndex){
+
+            data.adjustLinkWeight(sNodeId, startIndex, endIndex);
+
+            display();
+        };
+
+        function changeLinkColor(lId, doHighlight){
+
+            if(doHighlight){
+                svg.select('#' + lId).classed('highlight', true);
+            }
+            else {
+                svg.select('#' + lId).classed('highlight', false);
+            }
+        }
+
+        this.changeLinkColor = function(lId, doHighlight){
+            changeLinkColor(lId, doHighlight);
+        };
+
+        this.filterNode = function(value){
+
+            resetVisuals();
+
+            if(value !== ""){
+                svg.selectAll('line').transition().style({'opacity': 0.1, 'pointer-events': 'none'});
+                svg.selectAll("circle:not([data-title*='" + value + "'])").transition().style({'opacity': 0.1});
+            }
         };
 
         function set(config) {
@@ -268,8 +333,8 @@ define(["common"], function (common) {
 
                         svg.on('click', function(){
 
-                            config.hideNodeDialog();
-                            config.hideLinkDialog();
+                            config.app.hideNodeDialog();
+                            config.app.hideLinkDialog();
 
                         });
 
