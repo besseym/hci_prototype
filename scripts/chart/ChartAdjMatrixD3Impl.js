@@ -255,8 +255,9 @@ define(["common", "chart/Chart"], function (common, Chart) {
 
                             if(!data.hasMaxLinks(d.source.id)) {
 
+                                config.app.makeLink(d.source.id, d.target.id);
+
                                 link = data.makeLink(d.source.id, d.target.id);
-                                //d3.select(this).attr({fill: cScale(link.weight)});
                                 config.app.selectNode(d.source.id);
                                 display();
 
@@ -269,7 +270,6 @@ define(["common", "chart/Chart"], function (common, Chart) {
                         else {
 
                             breakLink(d.id);
-                            config.app.breakLink(d.id);
                         }
                     }
                 })
@@ -304,7 +304,7 @@ define(["common", "chart/Chart"], function (common, Chart) {
         function selectNode(nId){
 
             config.app.selectNode(nId);
-            svg.selectAll("text.node").style({'text-decoration': 'none', 'font-style': 'none'});
+            svg.selectAll("text.node").style({'text-decoration': 'none', 'font-style': 'normal'});
             svg.select('#s-' + nId).style({'text-decoration': 'underline', 'font-style': 'italic'});
         }
 
@@ -355,6 +355,8 @@ define(["common", "chart/Chart"], function (common, Chart) {
 
             link = data.removeLink(lId);
 
+            config.app.breakLink(lId);
+
             display();
         }
 
@@ -401,6 +403,26 @@ define(["common", "chart/Chart"], function (common, Chart) {
 
             if(value !== ""){
                 svg.selectAll("text:not([data-title*='" + value + "'])").transition().style({'opacity': 0.2});
+            }
+        };
+
+        this.reset = function(){
+
+            var nodes;
+
+            if(parent.exists()) {
+
+                nodes = svg.selectAll("text.node");
+
+                if(!nodes.empty()) {
+
+                    nodes.style({
+                        'opacity': 1.0,
+                        'fill': 'black',
+                        'text-decoration': 'none',
+                        'font-style': 'normal'
+                    });
+                }
             }
         };
 

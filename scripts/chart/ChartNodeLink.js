@@ -47,6 +47,13 @@ define(["common"], function (common) {
             }
         };
 
+        this.reset = function() {
+
+            if (exists) {
+                resetVisuals();
+            }
+        };
+
         function focusOnNode(nId){
 
             resetVisuals();
@@ -64,7 +71,11 @@ define(["common"], function (common) {
 
         this.makeLink = function(sourceId, targetId){
 
-            var l = data.makeLink(sourceId, targetId);
+            var l;
+
+            config.app.makeLink(sourceId, targetId);
+
+            l = data.makeLink(sourceId, targetId);
 
             svg.select('#' + l.target.id).classed('g-' + l.source.id, true);
 
@@ -75,7 +86,11 @@ define(["common"], function (common) {
 
         this.breakLink = function(lId){
 
-            var l = data.removeLink(lId);
+            var l;
+
+            config.app.breakLink(lId);
+
+            l = data.removeLink(lId);
 
             display();
 
@@ -116,9 +131,9 @@ define(["common"], function (common) {
 
                     var mouse;
 
-                    if(!d3.event.shiftKey){
-                        return;
-                    }
+                    //if(!d3.event.shiftKey){
+                    //    return;
+                    //}
 
                     config.app.hideNodeDialog();
 
@@ -177,9 +192,9 @@ define(["common"], function (common) {
 
                     var circle;
 
-                    if(!d3.event.shiftKey){
-                        return;
-                    }
+                    //if(!d3.event.shiftKey){
+                    //    return;
+                    //}
 
                     config.app.hideLinkDialog();
 
@@ -223,7 +238,7 @@ define(["common"], function (common) {
         function resetVisuals(){
 
             svg.selectAll('line').style({'opacity': 1.0, 'pointer-events': 'auto'});
-            svg.selectAll('circle').style({'opacity': 1.0});
+            svg.selectAll('circle').style({'opacity': 1.0, fill: '#555'});
         }
 
         function updateSvg(){

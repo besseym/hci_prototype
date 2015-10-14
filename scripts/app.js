@@ -14,6 +14,10 @@ require(
 
             p,
             parameterMap = common.getParameterMap(),
+            task = {
+                isEnabled: false,
+                id: 0
+            },
 
             activeChart = "matrix",
             titleFilter = "",
@@ -22,6 +26,9 @@ require(
             dataNodeLink,
             nodeLinkChart,
             adjMatrixChart,
+
+            inputTitleFilter = $('#input-filter-title'),
+            inputHighlightSelect = $('#form-hightlight input[name=highlight]:radio'),
 
             waitFeedback = $("#wait-feedback"),
 
@@ -61,11 +68,29 @@ require(
             for(p in parameterMap){
 
                 switch(p){
-                    case 'content':
 
-                        if(parameterMap[p] === 'matrix'){
-                            focusHighlightTab();
-                            focusMatrixContent();
+                    case 'task':
+
+                        if(parameterMap[p] === '1'){
+
+                            task.isEnabled = true;
+                            task.id = 1;
+                            task.href = '/hci_prototype/task_success_1.html';
+                        }
+                        else if(parameterMap[p] === '2'){
+
+                            task.isEnabled = true;
+                            task.id = 2;
+                            task.href = '/hci_prototype/task_success_2.html';
+                        }
+                        else if(parameterMap[p] === '3'){
+
+                            task.isEnabled = true;
+                            task.id = 3;
+                            task.href = '/hci_prototype/task_success_3.html';
+                        }
+                        else {
+                            task.isEnabled = false;
                         }
 
                         break;
@@ -158,6 +183,7 @@ require(
             });
 
             if(isMatch){
+
                 $('#content-viz').show();
                 $('#content-overview').hide();
 
@@ -178,15 +204,6 @@ require(
                     resultCount.text(dataNodeLink.getNodeCount());
                     focusHighlightTab();
 
-                    //if("nodeLink" === activeChart){
-                    //    focusVizContent();
-                    //
-                    //}
-                    //else if("matrix" === activeChart){
-                    //    focusMatrixContent();
-                    //
-                    //}
-
                     loadNodeLinkChart();
                     loadAdjMatrixChart();
 
@@ -198,6 +215,8 @@ require(
                     }
 
                     waitFeedback.hide();
+
+                    resetHightlight();
                 });
             }
             else {
@@ -213,6 +232,30 @@ require(
         $("#form-hightlight").submit(function( event ) {
             event.preventDefault();
         });
+
+        $("#btn-hightlight-reset").on('click', function( event ) {
+
+            resetHightlight();
+
+            event.preventDefault();
+        });
+
+        function resetHightlight(){
+
+            titleFilter = "";
+            typeColorArray = [];
+            selectedNodeId = undefined;
+
+            buildColorKey(typeColorArray);
+
+            adjMatrixChart.reset();
+            nodeLinkChart.reset();
+
+            inputTitleFilter.val("");
+            inputHighlightSelect.attr("checked", false);
+
+            hideSelectTab();
+        }
 
         $("a[href='#tab-pane-node-link']").on("shown.bs.tab", function( event ) {
 
@@ -263,6 +306,9 @@ require(
 
                     selectNode: selectNode,
 
+                    makeLink: makeLink,
+                    breakLink: breakLink,
+
                     focusSelectTab: focusSelectTab,
                     buildSelectPanel: buildSelectPanel,
 
@@ -292,13 +338,14 @@ require(
                     },
                     selectNode: selectNode,
                     changeSelectedLinkColor: changeSelectedLinkColor,
+                    makeLink: makeLink,
                     breakLink: breakLink,
                     showDangerMsg: showDangerMsg
                 }
             });
         }
 
-        $( "#form-hightlight input[name=highlight]:radio" ).change(function(event) {
+        inputHighlightSelect.change(function(event) {
 
             var value = $(this).val();
 
@@ -314,9 +361,9 @@ require(
             buildColorKey(typeColorArray);
         });
 
-        $( "#form-hightlight input[name=input-filter-title]" ).on('input', function(event) {
+        inputTitleFilter.on('input', function(event) {
 
-            titleFilter = $(this).val();
+            titleFilter = $(this).val().toLowerCase();
 
             if("nodeLink" === activeChart) {
                 nodeLinkChart.filterNode(titleFilter);
@@ -330,6 +377,8 @@ require(
         function selectNode(sNodeId){
 
             if(dataNodeLink.hasNode(sNodeId)) {
+
+                resetHightlight();
 
                 buildSelectPanel(dataNodeLink.getNode(sNodeId), dataNodeLink.getNodeConnect(sNodeId));
                 focusSelectTab();
@@ -372,8 +421,6 @@ require(
             var id = $(this).attr('href');
             nodeLinkChart.breakLink(id);
 
-            breakLink(id);
-
             event.preventDefault();
         });
 
@@ -415,7 +462,8 @@ require(
 
             var hasSelected = !common.isUndefined(selectedNodeId),
                 isSelectedNode = selectedNodeId === d.id,
-                isConnectedToSelected,
+                isThisConnectedToSelected,
+                isSelectedConnectedToThis,
                 selectBlk, thisToSelectedBlk, selectedToThisBlk;
 
             nodeDialog.find("#n-d-id").text(d.id);
@@ -427,7 +475,8 @@ require(
             nodeDialog.find("#n-d-show-id").text(d.showId);
 
             if(hasSelected && !isSelectedNode){
-                isConnectedToSelected = dataNodeLink.isConnected(selectedNodeId, d.id);
+                isThisConnectedToSelected = dataNodeLink.isConnected(selectedNodeId, d.id);
+                isSelectedConnectedToThis = dataNodeLink.isConnected(d.id, selectedNodeId);
             }
 
             selectBlk = nodeDialog.find("#d-n-select");
@@ -440,10 +489,21 @@ require(
 
             thisToSelectedBlk = nodeDialog.find("#d-n-this-to-selected");
             selectedToThisBlk = nodeDialog.find("#d-n-selected-to-this");
-            if(hasSelected && !isSelectedNode && !isConnectedToSelected){
+            if(hasSelected && !isSelectedNode){
 
-                thisToSelectedBlk.css("display", "block");
-                selectedToThisBlk.css("display", "block");
+                if(!isThisConnectedToSelected) {
+                    thisToSelectedBlk.css("display", "block");
+                }
+                else {
+                    thisToSelectedBlk.css("display", "none");
+                }
+
+                if(!isSelectedConnectedToThis) {
+                    selectedToThisBlk.css("display", "block");
+                }
+                else {
+                    selectedToThisBlk.css("display", "none");
+                }
             }
             else {
 
@@ -525,7 +585,7 @@ require(
                     connection = connect.connectionArray[j];
 
                     connectOutArray = [
-                        "<tr id='s-" + connection.l.id + "' data-link-id='" + connection.l.id + "' data-source-id='" + connection.l.source.id + "' class='s-l'>",
+                        "<tr id='s-" + connection.l.id + "' data-link-id='" + connection.l.id + "' data-source-id='" + connection.l.source.id + "' data-target-id='" + connection.l.target.id + "' class='s-l'>",
                         "<td>",
                         "<i class='fa fa-bars'></i>",
                         "</td>",
@@ -560,7 +620,13 @@ require(
                 update: function( event, ui ) {
 
                     var sortEndIndex = ui.item.index(),
-                        sNodeId = ui.item.data('source-id');
+                        sNodeId = ui.item.data('source-id'),
+                        tNodeId = ui.item.data('target-id');
+
+                    if(task.isEnabled && task.id === 3 && selectedNodeId === 'n-22611' && tNodeId === 'n-22798'){
+
+                        $(location).attr('href', task.href);
+                    }
 
                     if("nodeLink" === activeChart) {
                         nodeLinkChart.adjustLinkWeight(sNodeId, sortStartIndex, sortEndIndex);
@@ -624,15 +690,28 @@ require(
                     adjMatrixChart.breakLink(id);
                 }
 
-                breakLink(id);
-
                 event.preventDefault();
             });
         }
 
+        function makeLink(sId, tId){
+
+            if(task.isEnabled && task.id === 1 && sId === 'n-20804' && tId === 'n-20805'){
+
+                $(location).attr('href', task.href);
+            }
+        }
+
         function breakLink(lId){
 
-            var connectionRow = connectionTableBody.find("#s-" + lId);
+            var connectionRow;
+
+            if(task.isEnabled && task.id === 2 && lId === 'l-n-32392-n-32412'){
+
+                $(location).attr('href', task.href);
+            }
+
+            connectionRow = connectionTableBody.find("#s-" + lId);
 
             if(connectionRow.length > 0){
                 connectionRow.remove();
@@ -683,6 +762,11 @@ require(
 
             $('#nav-tab-select').css("visibility", "visible");
             $('#tabs-dialog a[href="#tab-pane-select"]').tab('show');
+        }
+
+        function hideSelectTab() {
+
+            $('#nav-tab-select').css("visibility", "hidden");
         }
 
         function focusVizContent() {
