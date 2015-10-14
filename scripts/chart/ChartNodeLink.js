@@ -41,8 +41,10 @@ define(["common"], function (common) {
 
         this.clear = function(){
 
-            svg.selectAll("g.links").remove();
-            svg.selectAll("g.nodes").remove();
+            if(exists) {
+                svg.selectAll("g.links").remove();
+                svg.selectAll("g.nodes").remove();
+            }
         };
 
         function focusOnNode(nId){
@@ -110,9 +112,6 @@ define(["common"], function (common) {
                     },
                     "marker-end": "url(#arrow)"
                 })
-                .style("stroke-width", function (d) {
-                    return d.weight;
-                })
                 .on('mouseover', function(d, i){
 
                     var mouse;
@@ -137,7 +136,8 @@ define(["common"], function (common) {
                 .selectAll("line")
                 .data(force.links(), function(d) { return d.id; })
                 .style("stroke-width", function (d) {
-                    return d.weight;
+                    return Math.sqrt((1 / d.weight) * 20);
+                    //return (1 / d.weight) * 10;
                 });
 
             linksGroup
@@ -150,10 +150,10 @@ define(["common"], function (common) {
                 .selectAll("circle")
                 .data(force.nodes(), function(d) { return d.id; })
                 .enter().append("circle")
-                .attr("id", function(d, i){
-                    return d.id;
-                })
                 .attr({
+                    "id": function(d, i){
+                        return d.id;
+                    },
                     "class": function (d, i) {
                         return d.class;
                     },
@@ -202,21 +202,6 @@ define(["common"], function (common) {
                 .attr({
                     "class": function (d, i) {
                         return d.class;
-                    },
-                    "r": function(d, i){
-
-                        var weight = 1;
-                        if(d.duration > 0){
-                            weight = d.duration;
-                        }
-
-                        return Math.log(parseInt(weight)* 100);
-                    },
-                    "data-title": function (d, i) {
-                        return d.titleFilter;
-                    },
-                    "data-group": function(d, i){
-                        return d.group;
                     }
                 });
 

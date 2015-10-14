@@ -13,8 +13,8 @@ define(["common", "chart/Chart"], function (common, Chart) {
             typeColorScale = d3.scale.category20(),
             ratingColorScale = d3.scale.category20(),
             otherColorScale = d3.scale.category10(),
-            cScale = d3.scale.ordinal().domain([1, 2, 3, 4, 5, 6, 7]).range(["#eff3ff","#c6dbef","#9ecae1","#6baed6","#4292c6","#2171b5","#084594"]),
-            hScale = d3.scale.ordinal().domain([1, 2, 3, 4, 5, 6, 7]).range(["#feedde","#fdd0a2","#fdae6b","#fd8d3c","#f16913","#d94801","#8c2d04"]),
+            cScale = d3.scale.ordinal().domain([7, 6, 5, 4, 3, 2, 1]).range(["#eff3ff","#c6dbef","#9ecae1","#6baed6","#4292c6","#2171b5","#084594"]),
+            hScale = d3.scale.ordinal().domain([7, 6, 5, 4, 3, 2, 1]).range(["#feedde","#fdd0a2","#fdae6b","#fd8d3c","#f16913","#d94801","#8c2d04"]),
             dScale = d3.scale.ordinal().domain([1, 2, 3, 4, 5, 6, 7]).range(["#feedde","#fdd0a2","#fdae6b","#fd8d3c","#f16913","#d94801","#8c2d04"]);
 
         //config the object
@@ -406,7 +406,9 @@ define(["common", "chart/Chart"], function (common, Chart) {
 
         this.clear = function(){
 
-            svg.selectAll("*").remove();
+            if(parent.exists()) {
+                svg.selectAll("*").remove();
+            }
         };
 
         function set(config) {
