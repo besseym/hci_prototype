@@ -16,6 +16,8 @@ require(
             parameterMap = common.getParameterMap(),
 
             activeChart = "matrix",
+            titleFilter = "",
+            typeColorArray,
 
             dataNodeLink,
             nodeLinkChart,
@@ -213,13 +215,41 @@ require(
         });
 
         $("a[href='#tab-pane-node-link']").on("shown.bs.tab", function( event ) {
-            activeChart = "nodeLink";
+
             nodeLinkChart.display();
+
+            if(!common.isUndefined(typeColorArray) && typeColorArray.length > 0) {
+                nodeLinkChart.highlight(typeColorArray);
+            }
+
+            if(!common.isUndefined(titleFilter)) {
+                nodeLinkChart.filterNode(titleFilter);
+            }
+
+            if(!common.isUndefined(selectedNodeId) && titleFilter === "") {
+                nodeLinkChart.focusOnNode(selectedNodeId);
+            }
+
+            activeChart = "nodeLink";
         });
 
         $("a[href='#tab-pane-matrix']").on("shown.bs.tab", function( event ) {
-            activeChart = "matrix";
+
             adjMatrixChart.display();
+
+            if(!common.isUndefined(typeColorArray) && typeColorArray.length > 0) {
+                adjMatrixChart.highlight(typeColorArray);
+            }
+
+            if(!common.isUndefined(titleFilter)) {
+                adjMatrixChart.filterNode(titleFilter);
+            }
+
+            if(!common.isUndefined(selectedNodeId) && titleFilter === "") {
+                adjMatrixChart.selectNode(selectedNodeId);
+            }
+
+            activeChart = "matrix";
         });
 
         function loadNodeLinkChart(){
@@ -262,6 +292,7 @@ require(
                     },
                     selectNode: selectNode,
                     changeSelectedLinkColor: changeSelectedLinkColor,
+                    breakLink: breakLink,
                     showDangerMsg: showDangerMsg
                 }
             });
@@ -269,28 +300,29 @@ require(
 
         $( "#form-hightlight input[name=highlight]:radio" ).change(function(event) {
 
-            var value = $(this).val(),
-                typeColorArray;
+            var value = $(this).val();
+
+            typeColorArray = chartUtil.getTypeColorArray(value, dataNodeLink);
 
             if("nodeLink" === activeChart) {
-                typeColorArray = nodeLinkChart.highlight(value);
+                nodeLinkChart.highlight(typeColorArray);
             }
             else if("matrix" === activeChart){
-                typeColorArray = adjMatrixChart.highlight(value);
+                adjMatrixChart.highlight(typeColorArray);
             }
 
             buildColorKey(typeColorArray);
         });
 
-        $( "#form-hightlight input[name=input-filter-name]" ).on('input', function(event) {
+        $( "#form-hightlight input[name=input-filter-title]" ).on('input', function(event) {
 
-            var value = $(this).val();
+            titleFilter = $(this).val();
 
             if("nodeLink" === activeChart) {
-                nodeLinkChart.filterNode(value);
+                nodeLinkChart.filterNode(titleFilter);
             }
             else if("matrix" === activeChart){
-                adjMatrixChart.filterNode(value);
+                adjMatrixChart.filterNode(titleFilter);
             }
 
         });
@@ -337,13 +369,10 @@ require(
         //link dialog actions
         linkDialogBtn.on('click', function( event ) {
 
-            var id = $(this).attr('href'),
-                connectionRow = connectionTableBody.find("#s-" + id);
+            var id = $(this).attr('href');
             nodeLinkChart.breakLink(id);
 
-            if(connectionRow.length > 0){
-                connectionRow.remove();
-            }
+            breakLink(id);
 
             event.preventDefault();
         });
@@ -595,10 +624,19 @@ require(
                     adjMatrixChart.breakLink(id);
                 }
 
-                connectionTableBody.find("#s-" + id).remove();
+                breakLink(id);
 
                 event.preventDefault();
             });
+        }
+
+        function breakLink(lId){
+
+            var connectionRow = connectionTableBody.find("#s-" + lId);
+
+            if(connectionRow.length > 0){
+                connectionRow.remove();
+            }
         }
 
         function buildColorKey(typeColorArray){
