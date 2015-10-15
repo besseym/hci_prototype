@@ -623,7 +623,7 @@ require(
                         sNodeId = ui.item.data('source-id'),
                         tNodeId = ui.item.data('target-id');
 
-                    if(task.isEnabled && task.id === 3 && selectedNodeId === 'n-22611' && tNodeId === 'n-22798'){
+                    if(task.isEnabled && task.id === 3 && selectedNodeId === 'n-32392' && tNodeId === 'n-32412' && sortEndIndex === 0){
 
                         $(location).attr('href', task.href);
                     }
@@ -696,7 +696,7 @@ require(
 
         function makeLink(sId, tId){
 
-            if(task.isEnabled && task.id === 1 && sId === 'n-20804' && tId === 'n-20805'){
+            if(task.isEnabled && task.id === 2 && sId === 'n-20804' && tId === 'n-20805'){
 
                 $(location).attr('href', task.href);
             }
@@ -706,7 +706,7 @@ require(
 
             var connectionRow;
 
-            if(task.isEnabled && task.id === 2 && lId === 'l-n-32392-n-32412'){
+            if(task.isEnabled && task.id === 1 && lId === 'l-n-22813-n-22951'){
 
                 $(location).attr('href', task.href);
             }
