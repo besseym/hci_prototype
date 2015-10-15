@@ -261,12 +261,12 @@ require(
 
             nodeLinkChart.display();
 
-            if(!common.isUndefined(typeColorArray) && typeColorArray.length > 0) {
-                nodeLinkChart.highlight(typeColorArray);
-            }
-
             if(!common.isUndefined(titleFilter)) {
                 nodeLinkChart.filterNode(titleFilter);
+            }
+
+            if(!common.isUndefined(typeColorArray) && typeColorArray.length > 0) {
+                nodeLinkChart.highlight(typeColorArray);
             }
 
             if(!common.isUndefined(selectedNodeId) && titleFilter === "") {
@@ -280,12 +280,12 @@ require(
 
             adjMatrixChart.display();
 
-            if(!common.isUndefined(typeColorArray) && typeColorArray.length > 0) {
-                adjMatrixChart.highlight(typeColorArray);
-            }
-
             if(!common.isUndefined(titleFilter)) {
                 adjMatrixChart.filterNode(titleFilter);
+            }
+
+            if(!common.isUndefined(typeColorArray) && typeColorArray.length > 0) {
+                adjMatrixChart.highlight(typeColorArray);
             }
 
             if(!common.isUndefined(selectedNodeId) && titleFilter === "") {
