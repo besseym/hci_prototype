@@ -378,7 +378,7 @@ require(
 
             if(dataNodeLink.hasNode(sNodeId)) {
 
-                resetHightlight();
+                //resetHightlight();
 
                 buildSelectPanel(dataNodeLink.getNode(sNodeId), dataNodeLink.getNodeConnect(sNodeId));
                 focusSelectTab();

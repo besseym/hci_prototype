@@ -56,7 +56,9 @@ define(["common"], function (common) {
 
         function focusOnNode(nId){
 
-            resetVisuals();
+            //resetVisuals();
+            svg.selectAll('line').style({'opacity': 1.0, 'pointer-events': 'auto'});
+            svg.selectAll('circle').style({'opacity': 1.0});
 
             svg.selectAll('line:not(.s-' + nId + ')').transition().style({'opacity': 0.1, 'pointer-events': 'none'});
             svg.selectAll('circle:not(.g-' + nId + ')').transition().style({'opacity': 0.1});
